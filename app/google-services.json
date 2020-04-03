@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "856698814004",
-    "firebase_url": "https://helepdoc-c4366.firebaseio.com",
-    "project_id": "helepdoc-c4366",
-    "storage_bucket": "helepdoc-c4366.appspot.com"
+    "project_number": "99956427864",
+    "firebase_url": "https://helepdoc.firebaseio.com",
+    "project_id": "helepdoc",
+    "storage_bucket": "helepdoc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:856698814004:android:2c74fdca96ec40e6d29461",
+        "mobilesdk_app_id": "1:99956427864:android:8111f9332a7a20663c0e2d",
         "android_client_info": {
           "package_name": "com.tpa.HelepDoc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "856698814004-pnakfjl1ubvf5i184qltoikfktfpu15q.apps.googleusercontent.com",
+          "client_id": "99956427864-h1nud7gmcg7l77oqfjq8618dpbddrrq2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.tpa.HelepDoc",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "856698814004-2eg6jmbgi99i5rdnvkke0njslth2m73r.apps.googleusercontent.com",
+          "client_id": "99956427864-16pjienfu7bt6g0s2gmf5qpttarku2og.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDSDDm_deY5udea-CuxZxZImdiZ2Gxh2ls"
+          "current_key": "AIzaSyCCi5HcfeLRmuy2cYrUKjh-xsPYbanVU_o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "856698814004-2eg6jmbgi99i5rdnvkke0njslth2m73r.apps.googleusercontent.com",
+              "client_id": "99956427864-16pjienfu7bt6g0s2gmf5qpttarku2og.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
