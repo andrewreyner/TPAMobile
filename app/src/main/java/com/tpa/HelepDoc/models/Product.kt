@@ -1,7 +1,6 @@
 package com.tpa.HelepDoc.models
 
-class Product(
-    id: String?,
+class Product(id: String?,
     name: String, indicator:String, attention: String, dosage:String, composition:String, price:Double, image:String){
     var name:String = name
     var indicator:String = indicator

@@ -27,13 +27,13 @@ class ProductPage : AppCompatActivity() {
 
         // WRITE
 
-        /*
+
         var id:String? = drugRef.push().key    // generateID
-        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
-        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
-            Toast.makeText(this@ProductPage, "heuhe", Toast.LENGTH_LONG).show()
-        }
-        */
+//        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
+//        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
+//            Toast.makeText(this@ProductPage, "heuhe", Toast.LENGTH_LONG).show()
+//        }
+
 
         // !! -> means data non null/ promise that never null
 
