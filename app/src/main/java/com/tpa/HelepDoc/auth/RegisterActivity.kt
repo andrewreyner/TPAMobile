@@ -96,11 +96,11 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             var id: String? = userRef.push().key
-            userRef.child(id!!).setValue(User(id, fullname, gender, dob, email, password, phone, 0.0f))
+            userRef.child(id!!).setValue(User(id, fullname, gender, dob, email, password, phone))
 
             Toast.makeText(applicationContext, "Successfully registered user!", Toast.LENGTH_LONG).show()
             resetField()
-            setSP(fullname, email, password, phone, gender, dob)
+            setSP(id as String, fullname, email, password, phone, gender, dob)
 
             goToSignIn(findViewById(android.R.id.content))
         }
@@ -123,7 +123,7 @@ class RegisterActivity : AppCompatActivity() {
         changeDate!!.text = sdf.format(cal.getTime())
     }
 
-    private fun setSP(fullname: String, email: String, password: String, phone: String, gender: String, dob: String) {
+    private fun setSP(id: String, fullname: String, email: String, password: String, phone: String, gender: String, dob: String) {
         val sp = getSharedPreferences(
             "Auth",
             Context.MODE_PRIVATE
@@ -131,6 +131,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val auth = sp.edit()
 
+        auth.putString("id", id)
         auth.putString("fullname", fullname)
         auth.putString("email", email)
         auth.putString("password", password)
@@ -148,6 +149,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val auth = sp.edit()
 
+        auth.putString("id", "")
         auth.putString("fullname", "")
         auth.putString("email", "")
         auth.putString("password", "")

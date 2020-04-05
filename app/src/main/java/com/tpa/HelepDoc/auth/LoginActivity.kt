@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.main.HomeActivity
+import com.tpa.HelepDoc.main.ProfileActivity
 import com.tpa.HelepDoc.models.User
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
@@ -65,8 +66,8 @@ class LoginActivity : AppCompatActivity() {
             for(u in users) {
                 if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
                     Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
-                    setSP(u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance)
-                    var intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
+                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
                     finish()
                     startActivity(intent)
                     return@setOnClickListener
@@ -85,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun setSP(fullname: String, email: String, password: String, phone: String, gender: String, dob: String, balance: Float) {
+    private fun setSP(id: String, fullname: String, email: String, password: String, phone: String, gender: String, dob: String, balance: Float, picture: String) {
         val sp = getSharedPreferences(
             "Auth",
             Context.MODE_PRIVATE
@@ -93,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
 
         val auth = sp.edit()
 
+        auth.putString("id", id)
         auth.putString("fullname", fullname)
         auth.putString("email", email)
         auth.putString("password", password)
@@ -100,6 +102,7 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("gender", gender)
         auth.putString("dob", dob)
         auth.putFloat("balance", balance)
+        auth.putString("picture", picture)
 
         auth.commit()
     }
@@ -112,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
         val auth = sp.edit()
 
+        auth.putString("id", "")
         auth.putString("fullname", "")
         auth.putString("email", "")
         auth.putString("password", "")
@@ -119,6 +123,7 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("gender", "")
         auth.putString("dob", "")
         auth.putFloat("balance", 0.0f)
+        auth.putString("picture", "")
         auth.putString("comeFrom", "")
 
         auth.commit()
