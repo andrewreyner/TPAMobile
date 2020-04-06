@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val intent = Intent(this@MainActivity, ProductPage::class.java)
+        val intent = Intent(this@MainActivity, ChatActivity::class.java)
         startActivity(intent)
         finish()
     }

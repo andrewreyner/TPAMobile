@@ -26,8 +26,8 @@ class ProductPage : AppCompatActivity() {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var products:ArrayList<Product>
     private lateinit var PRODUCTS:ArrayList<Product>
-    private val drugDatabaseRef=  FirebaseDatabase.getInstance().getReference("drugs")
-    private val drugStorageReference = FirebaseStorage.getInstance().getReference("drugs")
+    private val drugDatabaseRef=  FirebaseDatabase.getInstance().getReference("products")
+    private val drugStorageReference = FirebaseStorage.getInstance().getReference("products")
 
     private lateinit var svProduct:SearchView
 
@@ -37,16 +37,12 @@ class ProductPage : AppCompatActivity() {
 
 
 
-<<<<<<< HEAD
-=======
-
-        var id:String? = drugRef.push().key    // generateID
+//        var id:String? = drugRef.push().key    // generateID
 //        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
 //        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
 //            Toast.makeText(this@ProductPage, "heuhe", Toast.LENGTH_LONG).show()
 //        }
 
->>>>>>> 281ac4818b4803c6000c3dd89728819033ebc787
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,35 +126,37 @@ class ProductPage : AppCompatActivity() {
 
     fun initProducts(){
         var id:String? = drugDatabaseRef.push().key    // generateID
-        var p: Product = Product(id,
-            "Per tablet" ,
-            "FLUCONAZOLE 150 MG KAPSUL",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
-            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
-                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
-                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
-                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
-            "Fluconazole 150 mg" ,
-            20700.00 ,
-            "")
-        insertProduct(p, R.drawable.fluconazole)
+//        var p: Product = Product(id,
+//            "Per tablet" ,
+//            "FLUCONAZOLE 150 MG KAPSUL",
+//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
+//            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
+//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
+//                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
+//                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
+//                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
+//            "Fluconazole 150 mg" ,
+//            20700.00 ,
+//            "",
+//            4.0)
+//        insertProduct(p, R.drawable.fluconazole)
 
-
-        id = drugDatabaseRef.push().key
-        var p2 = Product(
-            id,
-            "Per strip",
-            "KETOCONAZOLE 200 MG 10 TABLET",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Infeksi jamur sistemik, kandidiasis mukokutan kronis yang tidak responsif terhadap nistatin & obat-obat lainnya\n",
-            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
-            "Ketoconazole 200 mg",
-            5200.00,
-            ""
-        )
-        insertProduct(p2, R.drawable.ketoconazole)
-
+//
+//        id = drugDatabaseRef.push().key
+//        var p2 = Product(
+//            id,
+//            "Per strip",
+//            "KETOCONAZOLE 200 MG 10 TABLET",
+//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Infeksi jamur sistemik, kandidiasis mukokutan kronis yang tidak responsif terhadap nistatin & obat-obat lainnya\n",
+//            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
+//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
+//            "Ketoconazole 200 mg",
+//            5200.00,
+//            "",
+//            5.0
+//        )
+//        insertProduct(p2, R.drawable.ketoconazole)
+//
         id=drugDatabaseRef.push().key
         var p3 = Product(
             id,
@@ -169,7 +167,8 @@ class ProductPage : AppCompatActivity() {
             "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
             "Mecobalamin 500 mg\n",
             8800.00,
-            ""
+            "",
+            4.5
         )
         insertProduct(p3, R.drawable.mecobalamin)
     }
