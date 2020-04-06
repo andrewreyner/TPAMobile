@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductPage">
+    <SearchView
+        android:id="@+id/sv_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product"
         android:layout_width="match_parent"
