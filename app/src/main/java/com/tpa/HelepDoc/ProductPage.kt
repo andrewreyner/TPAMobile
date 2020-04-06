@@ -1,16 +1,19 @@
 package com.tpa.HelepDoc
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.tpa.HelepDoc.adapters.ProductAdapter
 import com.tpa.HelepDoc.models.Cart
@@ -22,9 +25,11 @@ class ProductPage : AppCompatActivity() {
     private lateinit var rvProduct:RecyclerView
     private lateinit var productAdapter: ProductAdapter
     private lateinit var products:ArrayList<Product>
-
+    private lateinit var PRODUCTS:ArrayList<Product>
     private val drugDatabaseRef=  FirebaseDatabase.getInstance().getReference("drugs")
     private val drugStorageReference = FirebaseStorage.getInstance().getReference("drugs")
+
+    private lateinit var svProduct:SearchView
 
     companion object{
         var carts :ArrayList<Cart>  = ArrayList()
@@ -36,35 +41,56 @@ class ProductPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_page)
-
+        svProduct = findViewById(R.id.sv_product)
         rvProduct  =  findViewById(R.id.rv_product)
-        products = ArrayList<Product>()
+        products = ArrayList()
+        PRODUCTS = ArrayList()
         // WRITE
 //        initProducts()
         // !! -> means data non null/ promise that never null
 
         // READ DATA
-               drugDatabaseRef.addValueEventListener(object: ValueEventListener{
-                   override fun onCancelled(dataSnapShot: DatabaseError) {
-                   }
+        drugDatabaseRef.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(dataSnapShot: DatabaseError) {
+            }
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                 if(dataSnapshot.exists()){
+                     for(p in dataSnapshot.children){
+                         // MAKE SURE THE DRUG Constructor is Initialize -> check on the models
+                         val product = p.getValue(Product::class.java)
+                         products.add(product!!)
+                     }
+                     PRODUCTS.addAll (products)
+                     productAdapter = ProductAdapter(products,this@ProductPage)
+                        rvProduct.apply {
+                            setHasFixedSize(true)
+                            layoutManager = GridLayoutManager(this@ProductPage, 2)
+                            adapter = productAdapter
+                        }
+                    }
+            }
+        })
+        svProduct.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                updateDatas(query)
 
-                   override fun onDataChange(dataSnapshot: DataSnapshot) {
-                       if(dataSnapshot.exists()){
-                           for(p in dataSnapshot.children){
-                               // MAKE SURE THE DRUG Constructor is Initialize -> check on the models
-                               val product = p.getValue(Product::class.java)
-                               products.add(product!!)
-                           }
-                           productAdapter = ProductAdapter(products,this@ProductPage)
+                return false
+            }
 
-                           rvProduct.apply {
-                               setHasFixedSize(true)
-                               layoutManager = GridLayoutManager(this@ProductPage, 2)
-                               adapter = productAdapter
-                           }
-                       }
-                   }
-               })
+            override fun onQueryTextChange(newText: String?): Boolean {
+                updateDatas(newText)
+                return false
+            }
+
+        })
+
+    }
+
+    fun showCart(menuItem:MenuItem){
+        if(menuItem.itemId == R.id.btn_cart){
+            val intent:Intent = Intent(this@ProductPage, CartActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun insertProduct(p: Product, image: Int){
@@ -138,5 +164,53 @@ class ProductPage : AppCompatActivity() {
         insertProduct(p3, R.drawable.mecobalamin)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.product_menu, menu)
+        return true
+    }
+
+//    private fun updateDatas(query:String?){
+//        products.removeAll(products)
+//        drugDatabaseRef.orderByChild("name").startAt(query!!.toUpperCase())
+//            .addListenerForSingleValueEvent(
+//            object:ValueEventListener{
+//                override fun onCancelled(p0: DatabaseError) {
+//                }
+//
+//                override fun onDataChange(p0: DataSnapshot) {
+//                    for(p in p0.children){
+//                        // MAKE SURE THE DRUG Constructor is Initialize -> check on the models
+//                        val product = p.getValue(Product::class.java)
+//                        products.add(product!!)
+//                    }
+//                    productAdapter.notifyDataSetChanged()
+////                    productAdapter = ProductAdapter(products,this@ProductPage)
+////                    rvProduct.apply {
+////                        setHasFixedSize(true)
+////                        layoutManager = GridLayoutManager(this@ProductPage, 2)
+////                        adapter = productAdapter
+////                    }
+//
+//                }
+//
+//            }
+//
+//        )
+//    }
+    fun updateDatas(query:String?){
+        products.removeAll(products)
+        if(query == null){
+            products.addAll(PRODUCTS)
+        }else{
+
+            for(p in PRODUCTS){
+                if(p.name.toUpperCase().contains(query!!.toUpperCase())){
+                    products.add(p)
+                }
+            }
+        }
+        productAdapter.notifyDataSetChanged()
+
+    }
 
 }
