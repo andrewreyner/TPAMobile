@@ -37,6 +37,16 @@ class ProductPage : AppCompatActivity() {
 
 
 
+<<<<<<< HEAD
+=======
+
+        var id:String? = drugRef.push().key    // generateID
+//        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
+//        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
+//            Toast.makeText(this@ProductPage, "heuhe", Toast.LENGTH_LONG).show()
+//        }
+
+>>>>>>> 281ac4818b4803c6000c3dd89728819033ebc787
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

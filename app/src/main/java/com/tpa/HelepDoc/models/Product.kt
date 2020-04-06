@@ -1,7 +1,11 @@
 package com.tpa.HelepDoc.models
 
+<<<<<<< HEAD
 class Product(
     id: String?, type:String,
+=======
+class Product(id: String?,
+>>>>>>> 281ac4818b4803c6000c3dd89728819033ebc787
     name: String, indicator:String, attention: String, dosage:String, composition:String, price:Double, image:String){
     var id:String? = id
     var type:String = type

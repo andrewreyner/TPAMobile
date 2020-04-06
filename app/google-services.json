@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "99956427864-107se00ev5dv8j80jo90fkh3h1ts2p3p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tpa.HelepDoc",
+            "certificate_hash": "8a9536a96cdc010fb70d6d0724c49d0913f4cc4f"
+          }
+        },
+        {
           "client_id": "99956427864-h1nud7gmcg7l77oqfjq8618dpbddrrq2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
