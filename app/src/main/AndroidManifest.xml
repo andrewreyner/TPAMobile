@@ -11,30 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".main.ProfileActivity"></activity>
-        <activity android:name=".main.DoctorActivity">
+        <activity android:name=".main.ViewTransactionActivity"></activity>
+        <activity android:name=".main.ProfileActivity" />
+        <activity android:name=".main.DoctorActivity"></activity>
+        <activity android:name=".main.HomeActivity">
 
         </activity>
-        <activity android:name=".main.HomeActivity">
-=======
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".CartActivity" />
         <activity android:name=".ProductDetail" />
-        <activity android:name=".ProductPage" />
-        <activity android:name=".MainActivity">
->>>>>>> upstream/master
+        <activity android:name=".ProductPage"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".auth.LoginActivity">
-
-        </activity>
-        <activity android:name=".auth.RegisterActivity"></activity>
-        <activity android:name=".ProductPage" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".auth.RegisterActivity" />
     </application>
 
 </manifest>

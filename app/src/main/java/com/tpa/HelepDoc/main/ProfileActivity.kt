@@ -41,6 +41,8 @@ class ProfileActivity : AppCompatActivity() {
         var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE);
         initField()
 
+        user_balance.setText("Your Balance: " + sp.getFloat("balance", 0f))
+
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -156,6 +158,12 @@ class ProfileActivity : AppCompatActivity() {
             dialog.cancel_change_password.setOnClickListener {
                 alert.dismiss()
             }
+        }
+
+        view_all_transaction.setOnClickListener {
+            var intent = Intent(this@ProfileActivity, ViewTransactionActivity::class.java)
+            finish()
+            startActivity(intent)
         }
     }
 

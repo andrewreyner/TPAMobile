@@ -39,8 +39,8 @@ class ProductDetail : AppCompatActivity() {
         setContentView(R.layout.activity_product_detail)
         initComponents()
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("drugs")
-        storageReference = FirebaseStorage.getInstance().getReference("drugs")
+        databaseReference = FirebaseDatabase.getInstance().getReference("products")
+        storageReference = FirebaseStorage.getInstance().getReference("products")
 
         val id:String? =intent.getStringExtra("productId")
         getProductById(id!!)

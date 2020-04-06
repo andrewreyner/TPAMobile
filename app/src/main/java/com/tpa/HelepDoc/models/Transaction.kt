@@ -10,8 +10,8 @@ class Transaction(id:String?, carts:ArrayList<Cart>?, userId:String, transaction
     var id:String? = id
     var carts:ArrayList<Cart>? = carts
     var userId:String = userId
-    var userBalance:Double =userBalance
+    var userBalance:Double = userBalance
     var transactionDate:Date? = transactionDate
-    constructor(): this("", null, "", null, 0.0)
+    constructor(): this("", ArrayList(), "", null, 0.0)
 
 }

@@ -10,6 +10,5 @@ class User (id: String?, fullname: String, gender: String, dob: String, email: S
     var phoneNumber: String = phoneNumber
     var balance: Float = 0.0f
     var picture: String = ""
-
     constructor() : this("","","","","","","")
 }

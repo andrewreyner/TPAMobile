@@ -22,7 +22,7 @@ class DoctorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_doctor)
 
         rvDoctor = findViewById(R.id.rv_doctor)
-        doctors = Vector<Doctor>()
+        doctors = Vector()
         doctorAdapter = DoctorAdapter(doctors, this)
 
 //        initDoctor()

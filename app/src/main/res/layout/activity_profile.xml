@@ -130,7 +130,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Update Profile"/>
+
         </LinearLayout>
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/view_all_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View All Transaction"/>
     </LinearLayout>
 
 </ScrollView>

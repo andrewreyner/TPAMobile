@@ -13,7 +13,7 @@ import com.tpa.HelepDoc.models.Doctor
 import kotlinx.android.synthetic.main.doctor_dialog.view.*
 import java.util.*
 
-class DoctorRecommendAdaptor(val doctors: Vector<Doctor>, val cont: Context): RecyclerView.Adapter<DoctorViewHolder>() {
+class DoctorRecommendAdapter(val doctors: Vector<Doctor>, val cont: Context): RecyclerView.Adapter<DoctorViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.doctor_recommend, parent, false)
         return DoctorViewHolder(view)

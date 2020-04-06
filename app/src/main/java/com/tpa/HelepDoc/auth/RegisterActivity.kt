@@ -100,9 +100,9 @@ class RegisterActivity : AppCompatActivity() {
 
             Toast.makeText(applicationContext, "Successfully registered user!", Toast.LENGTH_LONG).show()
             resetField()
-            setSP(id as String, fullname, email, password, phone, gender, dob)
+            setSP(id, fullname, email, password, phone, gender, dob)
 
-            goToSignIn(findViewById(android.R.id.content))
+            goToSignIn()
         }
 
     }
@@ -124,10 +124,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setSP(id: String, fullname: String, email: String, password: String, phone: String, gender: String, dob: String) {
-        val sp = getSharedPreferences(
-            "Auth",
-            Context.MODE_PRIVATE
-        )
+        val sp = getSharedPreferences("Auth", Context.MODE_PRIVATE)
 
         val auth = sp.edit()
 
@@ -162,7 +159,7 @@ class RegisterActivity : AppCompatActivity() {
         auth.commit()
     }
 
-    fun goToSignIn(view: View) {
+    fun goToSignIn() {
         var intent = Intent(this@RegisterActivity, LoginActivity::class.java)
         finish()
         startActivity(intent)
