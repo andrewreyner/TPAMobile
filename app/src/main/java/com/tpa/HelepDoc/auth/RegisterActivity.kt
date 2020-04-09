@@ -7,6 +7,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -14,12 +19,15 @@ import com.google.firebase.database.ValueEventListener
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.models.User
 import kotlinx.android.synthetic.main.activity_register.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class RegisterActivity : AppCompatActivity() {
-
+    private lateinit var firebaseAuth: FirebaseAuth
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var mGoogleSignInOptions: GoogleSignInOptions
     var userRef = FirebaseDatabase.getInstance().getReference("users")
     var users: Vector<User> = Vector()
     var cal = Calendar.getInstance()
@@ -29,7 +37,17 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        firebaseAuth = FirebaseAuth.getInstance()
         genderRadio = findViewById<RadioGroup>(R.id.genderGroup)
+
+        var sp = getSharedPreferences("Auth",
+            Context.MODE_PRIVATE);
+
+        if(sp.getString("comeFrom", "").equals("LoginNoGmailAccount")) {
+            findViewById<EditText>(R.id.fullname).setText(sp.getString("fullname", ""))
+            findViewById<EditText>(R.id.email).setText(sp.getString("email", ""))
+            findViewById<EditText>(R.id.phone).setText(sp.getString("phone", ""))
+        }
 
         resetSP()
 
@@ -69,14 +87,36 @@ class RegisterActivity : AppCompatActivity() {
 
         })
 
+        gotoSignin.setOnClickListener {
+            goToSignIn()
+        }
+
+        mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
+
+        googleSignIn.setOnClickListener {
+            signInGoogle()
+        }
+
         register.setOnClickListener {
             var fullname = findViewById<EditText>(R.id.fullname).text.toString()
             var email = findViewById<EditText>(R.id.email).text.toString()
             var password = findViewById<EditText>(R.id.password).text.toString()
             var confirmpass = findViewById<EditText>(R.id.confirmpass).text.toString()
             var phone = findViewById<EditText>(R.id.phone).text.toString()
-            var gender = findViewById<RadioButton>(findViewById<RadioGroup>(R.id.genderGroup).getCheckedRadioButtonId()).text.toString()
+            var gender = ""
             var dob = changeDate.text.toString()
+
+            try {
+                gender = findViewById<RadioButton>(findViewById<RadioGroup>(R.id.genderGroup).getCheckedRadioButtonId()).text.toString()
+            }
+            catch (e : Exception){
+                Toast.makeText(applicationContext, "Please choose a gender!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             for(u in users) {
                 if(email.equals(u.email) || phone.equals(u.phoneNumber)) {
@@ -165,4 +205,31 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun signInGoogle() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnSuccessListener { result ->
+            var fullname = findViewById<EditText>(R.id.fullname).setText(result.user!!.displayName)
+            var email = findViewById<EditText>(R.id.email).setText(result.user!!.email)
+            var phone = findViewById<EditText>(R.id.phone).setText(result.user!!.phoneNumber)
+            return@addOnSuccessListener
+        }
+    }
 }

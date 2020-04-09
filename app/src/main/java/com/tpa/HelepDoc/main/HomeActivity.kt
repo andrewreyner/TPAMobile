@@ -1,6 +1,7 @@
 package com.tpa.HelepDoc.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import com.tpa.HelepDoc.models.Cart
 import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.Product
 import com.tpa.HelepDoc.models.Transaction
+import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import kotlin.Comparator
 
@@ -163,6 +165,12 @@ class HomeActivity : AppCompatActivity() {
             }
         })
         getLatestTran()
+
+        gotoProfile.setOnClickListener {
+            var intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
     }
 
 

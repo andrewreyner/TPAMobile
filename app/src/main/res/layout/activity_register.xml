@@ -168,9 +168,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/gotoSignin"
             android:clickable="true"
-            android:onClick="goToSignIn"
             android:text="Sign in here."
             android:focusable="true" />
+
     </LinearLayout>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignIn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
 
 </LinearLayout>

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">HelepDoc</string>
+    <string-array name="theme">
+        <item>Red</item>
+        <item>Green</item>
+    </string-array>
+
+    <string-array name="font_size">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
 </resources>

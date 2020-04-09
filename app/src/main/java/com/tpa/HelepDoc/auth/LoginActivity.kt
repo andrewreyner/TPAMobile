@@ -6,8 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -21,7 +31,9 @@ import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
-
+    private lateinit var firebaseAuth: FirebaseAuth
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var mGoogleSignInOptions: GoogleSignInOptions
     var userRef = FirebaseDatabase.getInstance().getReference("users")
     var users: Vector<User> = Vector()
 
@@ -29,6 +41,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
         var sp = getSharedPreferences("Auth",
             Context.MODE_PRIVATE);
 
@@ -36,8 +54,8 @@ class LoginActivity : AppCompatActivity() {
             resetSP()
         }
 
-        var fullname = sp.getString("fullname", "");
-        findViewById<EditText>(R.id.emailOrPhone).setText(fullname)
+        var email = sp.getString("email", "");
+        findViewById<EditText>(R.id.emailOrPhone).setText(email)
 
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -76,6 +94,10 @@ class LoginActivity : AppCompatActivity() {
 
             Toast.makeText(applicationContext, "User doesn't exists or wrong password!", Toast.LENGTH_LONG).show()
             findViewById<EditText>(R.id.password).setText("")
+        }
+
+        googleSignIn.setOnClickListener {
+            signInGoogle()
         }
 
     }
@@ -127,5 +149,68 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("comeFrom", "")
 
         auth.commit()
+    }
+
+    fun signInGoogle() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    var nameRes : String? = ""
+    var gmailRes : String? = ""
+    var phoneRes : String? = ""
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnSuccessListener { result ->
+            nameRes = result.user!!.displayName
+            gmailRes = result.user!!.email
+            phoneRes = result.user!!.phoneNumber
+            checkGmailAuth()
+            return@addOnSuccessListener
+        }
+    }
+
+    private fun checkGmailAuth() {
+        for(u in users) {
+            if(gmailRes!!.toString().equals(u.email)){
+                setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
+                Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+                var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+                finish()
+                startActivity(intent)
+                return
+            }
+        }
+        Toast.makeText(applicationContext, "Account not found! Register first!", Toast.LENGTH_LONG).show()
+        val sp = getSharedPreferences(
+            "Auth",
+            Context.MODE_PRIVATE
+        )
+
+        val auth = sp.edit()
+
+        auth.putString("fullname", nameRes)
+        auth.putString("email", gmailRes)
+        auth.putString("phone", phoneRes)
+        auth.putString("comeFrom", "LoginNoGmailAccount")
+        auth.commit()
+
+        var intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+        finish()
+        startActivity(intent)
     }
 }
