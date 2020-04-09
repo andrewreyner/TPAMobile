@@ -1,9 +1,19 @@
 package com.tpa.HelepDoc.chatFragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.tpa.HelepDoc.R
+import com.tpa.HelepDoc.adapters.ChatAdapter
+import com.tpa.HelepDoc.adapters.LatestChatAdapter
+import com.tpa.HelepDoc.models.Chat
+import com.tpa.HelepDoc.models.Message
+import kotlin.math.log
+import kotlin.reflect.typeOf
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +30,20 @@ class ChatFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
+
+    private val CURRENTID:String = "-M43c_mp8Ur1bDV3PksP" // USER
+
+    private lateinit var chatReference:DatabaseReference
+
+
+    // Components
+    private lateinit var rvChats:RecyclerView
+
+
+    private lateinit var chats:ArrayList<Chat>
+    private lateinit var latestChatAdapter: LatestChatAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,10 +56,50 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        val view:View = inflater.inflate(R.layout.fragment_chat, container, false)
+
+        chatReference =  FirebaseDatabase.getInstance().getReference("chats")
+        rvChats = view.findViewById(R.id.rv_chats)
+        chats = ArrayList()
+
+
+        chatReference.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                chats.removeAll(chats)
+                if(p0.exists()){
+                    for(c in p0.children){
+                        val chat  = Chat()
+                        chat.doctorId = c.child("doctorId").value.toString()
+                        chat.userId = c.child("userId").value.toString()
+
+
+                        val messagesSS: DataSnapshot = c.child("messages")
+
+                        for(m in messagesSS.children){
+                            val message: Message =  m.getValue(Message::class.java)!!
+                            chat.messages!!.add(message)
+                        }
+
+                        chats.add(chat)
+                    }
+                }
+                latestChatAdapter = LatestChatAdapter(chats,CURRENTID, view.context)
+                rvChats.apply {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(view.context)
+                    adapter  =latestChatAdapter
+                }
+
+
+            }
+
+        })
+        return view
     }
+
 
     companion object {
         /**

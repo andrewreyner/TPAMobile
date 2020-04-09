@@ -1,16 +1,18 @@
 package com.tpa.HelepDoc
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageView
 
 import android.widget.Toast
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
 
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -18,11 +20,50 @@ import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
+
+//        actionBar!!.setDisplayHomeAsUpEnabled(true);
+//        actionBar!!.setHomeButtonEnabled(true);
+
+//        val intent = Intent(this@MainActivity, ChatActivity::class.java)
+//        startActivity(intent)
+//        finish()
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when(p0.itemId){
+            R.id.item_chat->{
+
+                val intent = Intent(this@MainActivity, ChatActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.item_product->{
+                val intent = Intent(this@MainActivity, ProductPage::class.java)
+                startActivity(intent)
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        p0.isChecked = false
+        finish()
+        Log.e("test", "test")
+
+        return false
+    }
+
+
+    private fun test(){
+
+
+
 
 //        val storageRef:StorageReference = FirebaseStorage.getInstance().getReference("images2").child("hehe2")
 //
@@ -71,10 +112,5 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-        val intent = Intent(this@MainActivity, ChatActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }

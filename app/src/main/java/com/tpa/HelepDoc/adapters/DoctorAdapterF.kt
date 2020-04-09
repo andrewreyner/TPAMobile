@@ -1,15 +1,18 @@
 package com.tpa.HelepDoc.adapters
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.tpa.HelepDoc.ChatDetailActivity
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.models.Doctor
 
-class DoctorAdapterF(val doctors:ArrayList<Doctor>, val categoryNames:ArrayList<String>): RecyclerView.Adapter<DoctorFViewHolder>(), Filterable{
+class DoctorAdapterF(val doctors:ArrayList<Doctor>, val categoryNames:ArrayList<String>,val currId:String, val context:Context): RecyclerView.Adapter<DoctorFViewHolder>(), Filterable{
 
     var DOCTORS:ArrayList<Doctor>? = ArrayList()
     var currCategory:String = "all"
@@ -30,6 +33,12 @@ class DoctorAdapterF(val doctors:ArrayList<Doctor>, val categoryNames:ArrayList<
         holder.ivDoctor.setImageResource(R.drawable.doctor)
         holder.tvName.text = doctor.fullname
         holder.tvSpecialist.text = doctor.specialist
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val intent = Intent(context, ChatDetailActivity::class.java)
+            intent.putExtra("CURRENTID", currId)
+            intent.putExtra("OPPONENTID", doctor.id)
+            context.startActivity(intent)
+        })
     }
 
     override fun getFilter(): Filter {

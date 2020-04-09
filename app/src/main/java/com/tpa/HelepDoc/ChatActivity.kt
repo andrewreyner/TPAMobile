@@ -19,6 +19,10 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var titles: ArrayList<String>
 
     private lateinit var chatAdapter:ChatAdapter
+
+    private val DOCTORID:String = "-M48nlk7aItLyYcj_b5G"
+    private val USERID:String = "-M43c_mp8Ur1bDV3PksP"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)

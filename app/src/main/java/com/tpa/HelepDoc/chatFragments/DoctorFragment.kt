@@ -34,6 +34,9 @@ class DoctorFragment : Fragment() {
     private var param2: String? = null
 
 
+    private val CURRENTID:String = "-M43c_mp8Ur1bDV3PksP" // USER
+
+
     // ours
     private var rvDoctor:RecyclerView? = null
     private lateinit var doctorAdapterF:DoctorAdapterF
@@ -96,7 +99,7 @@ class DoctorFragment : Fragment() {
 //                    spinnerCategory.
                     spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, categoryNames)
                     spinnerCategory.adapter = spinnerAdapter
-                    doctorAdapterF = DoctorAdapterF(doctors, categoryNames)
+                    doctorAdapterF = DoctorAdapterF(doctors, categoryNames, CURRENTID, view.context)
 
                     rvDoctor?.apply {
                         setHasFixedSize(true)

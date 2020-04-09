@@ -8,25 +8,25 @@
     tools:context=".ChatActivity">
 
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/ti_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Doctors"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-                    />
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/ti_chat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="chats"
-                    />
-            </com.google.android.material.tabs.TabLayout>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/ti_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doctors"
+
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/ti_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chats" />
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

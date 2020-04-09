@@ -1,0 +1,30 @@
+<RelativeLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#8aa2e6">
+
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        >
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hihihihi"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
