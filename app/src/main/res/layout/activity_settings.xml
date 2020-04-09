@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                style="@style/MainOne"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Theme"/>
@@ -49,7 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                style="@style/MainOne"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Font Size"/>
