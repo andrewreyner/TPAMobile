@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        actionBar!!.setDisplayHomeAsUpEnabled(true);
 //        actionBar!!.setHomeButtonEnabled(true);
 
-//        val intent = Intent(this@MainActivity, ChatActivity::class.java)
-//        startActivity(intent)
-//        finish()
+        val intent = Intent(this@MainActivity, NavigatorActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         p0.isChecked = false
-        finish()
+//        finish()
         Log.e("test", "test")
 
         return false

@@ -33,7 +33,7 @@ class DoctorFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-
+    // CHANGE THIS ONLY
     private val CURRENTID:String = "-M43c_mp8Ur1bDV3PksP" // USER
 
 

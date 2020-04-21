@@ -14,12 +14,10 @@ class ProductViewHolder  constructor (view: View): RecyclerView.ViewHolder(view)
     var ivProductImage:ImageView = view.findViewById(R.id.iv_product_image) as ImageView
     var tvProductName:TextView = view.findViewById(R.id.tv_product_name)
     var tvProductPrice:TextView = view.findViewById(R.id.tv_product_price)
-    var tvProductRating:TextView = view.findViewById(R.id.tv_product_rating)
 
     fun bindItem(product: Product){
         ivProductImage.setImageResource(R.drawable.sample_product)
         tvProductName.text = product.name
-        tvProductRating.text = (product.rating/product.count_rate).toString() + " ("+ product.count_rate + ")"
         tvProductPrice.text= "IDR " +product.price.toInt().toString()
         Glide.with(itemView.context).load(product.image).into(ivProductImage)
     }
