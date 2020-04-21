@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -27,7 +28,7 @@ class CartActivity : AppCompatActivity() {
     lateinit var btnCheckout:Button
     private val USERID:String = "-M43c_mp8Ur1bDV3PksP"
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var tvMsg: TextView
+    private lateinit var tvMsg: RelativeLayout
     companion object{
         var totalPayment: Double = 0.0
     }

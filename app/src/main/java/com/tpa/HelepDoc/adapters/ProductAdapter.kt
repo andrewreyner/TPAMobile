@@ -28,6 +28,8 @@ class ProductAdapter(val products: ArrayList<Product>, val context:Context): Rec
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product:Product = products[position]
         holder.bindItem(product)
+//        holder.itemView.isClickable = true
+
         holder.itemView.setOnClickListener(View.OnClickListener {
 
             var intent:Intent = Intent(context, ProductDetail::class.java)

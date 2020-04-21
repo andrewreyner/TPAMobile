@@ -39,6 +39,30 @@
 
         </activity>
 
+        <service android:name="notifications.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_EVENT"/>
+            </intent-filter>
+
+        </service>
+
+
+        <service android:name="notifications.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGE_EVENT"/>
+            </intent-filter>
+
+        </service>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

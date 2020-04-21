@@ -5,22 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context=".CartActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_carts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
+    <RelativeLayout
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
         <TextView
             android:padding="10dp"
-            android:id="@+id/tv_msg"
-            android:layout_gravity="center"
 
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="There's no item in cart"
             android:textSize="20sp"/>
+
+
+
+    </RelativeLayout>
+
+
 
 
     <Button
@@ -28,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CHECKOUT"
-        android:background="@color/colorAccent"
+        android:background="@color/redBack"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp"
         ></Button>

@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".chatFragments.DoctorFragment">
+    <include
+        android:id="@+id/loading"
+        android:visibility="visible"
+        layout="@layout/progress_dialog"
+
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"

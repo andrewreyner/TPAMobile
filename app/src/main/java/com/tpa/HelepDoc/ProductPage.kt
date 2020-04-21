@@ -52,7 +52,7 @@ class ProductPage : AppCompatActivity() {
         products = ArrayList()
         PRODUCTS = ArrayList()
         // WRITE
-//        initProducts()
+        initProducts()
         // !! -> means data non null/ promise that never null
 
         // READ DATA
@@ -130,20 +130,20 @@ class ProductPage : AppCompatActivity() {
 
         id = drugDatabaseRef.push().key
 
-//        var p: Product = Product(id,
-//            "Per tablet" ,
-//            "FLUCONAZOLE 150 MG KAPSUL",
-//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
-//            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
-//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
-//                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
-//                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
-//                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
-//            "Fluconazole 150 mg" ,
-//            20700.00 ,
-//            "",
-//            4.0)
-//        insertProduct(p, R.drawable.fluconazole)
+        var p: Product = Product(id,
+            "Per tablet" ,
+            "FLUCONAZOLE 150 MG KAPSUL",
+            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
+            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
+            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
+                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
+                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
+                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
+            "Fluconazole 150 mg" ,
+            20700.00f ,
+            "",
+            4.0f)
+        insertProduct(p, R.drawable.fluconazole)
 
 //
 //        id = drugDatabaseRef.push().key
@@ -155,26 +155,26 @@ class ProductPage : AppCompatActivity() {
 //            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
 //            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
 //            "Ketoconazole 200 mg",
-//            5200.00,
+//            5200.00f,
 //            "",
 //            5.0
 //        )
 //        insertProduct(p2, R.drawable.ketoconazole)
 //
-        id=drugDatabaseRef.push().key
-        var p3 = Product(
-            id,
-            "Per strip",
-            "MECOBALAMIN 500 MCG 10 KAPSUL",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Neuropati perifer, tinitus, vertigo, anemia megalobastik karena defisiensi vitamin B12\n",
-            "HARUS DENGAN RESEP DOKTER. Hipersensitif komponen",
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
-            "Mecobalamin 500 mg\n",
-            8800.00f,
-            "",
-            4.5
-        )
-        insertProduct(p3, R.drawable.mecobalamin)
+//        id=drugDatabaseRef.push().key
+//        var p3 = Product(
+//            id,
+//            "Per strip",
+//            "MECOBALAMIN 500 MCG 10 KAPSUL",
+//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Neuropati perifer, tinitus, vertigo, anemia megalobastik karena defisiensi vitamin B12\n",
+//            "HARUS DENGAN RESEP DOKTER. Hipersensitif komponen",
+//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
+//            "Mecobalamin 500 mg\n",
+//            8800.00f,
+//            "",
+//            4.5
+//        )
+//        insertProduct(p3, R.drawable.mecobalamin)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

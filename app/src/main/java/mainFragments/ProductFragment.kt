@@ -1,6 +1,7 @@
 package mainFragments
 
 import android.app.ActionBar
+import android.app.ProgressDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.CursorAdapter
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +36,8 @@ import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.adapters.ProductAdapter
 import com.tpa.HelepDoc.models.Cart
 import com.tpa.HelepDoc.models.Product
+import java.io.File
+import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,7 +60,9 @@ class ProductFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
+
 
     private lateinit var rvProduct: RecyclerView
     private lateinit var productAdapter: ProductAdapter
@@ -71,15 +77,25 @@ class ProductFragment : Fragment() {
     private lateinit var acTextView: AutoCompleteTextView
     private lateinit var acAdapter:ArrayAdapter<String>
     private lateinit var myView:View
+
+    private lateinit var loading:RelativeLayout
+
+//    private lateinit var progressDialog: ProgressDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        productNames = ArrayList()
-        setHasOptionsMenu(true)
         val view:View =  inflater.inflate(R.layout.fragment_product, container, false)
+//        progressDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+//        progressDialog.show()
+
+        productNames = ArrayList()
+
         myView = view
-//        svProduct = view.findViewById(R.id.sv_product)
+
+    //LOADING
+        loading = view.findViewById(R.id.loading)
+
         rvProduct  =  view.findViewById(R.id.rv_product)
         products = ArrayList()
         PRODUCTS = ArrayList()
@@ -108,6 +124,9 @@ class ProductFragment : Fragment() {
                         layoutManager = GridLayoutManager(view.context, 2)
                         adapter = productAdapter
                     }
+                    var loading:RelativeLayout =view.findViewById(R.id.loading)
+                    loading.visibility = View.GONE
+                    setHasOptionsMenu(true)
                 }
             }
         })
@@ -139,7 +158,6 @@ class ProductFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
         inflater.inflate(R.menu.product_menu,menu)
-
         val searchItem = menu.findItem(R.id.sv_product)
         svProduct = searchItem?.actionView as SearchView
         svProduct.queryHint = "search"
@@ -227,4 +245,99 @@ class ProductFragment : Fragment() {
 
         var carts :ArrayList<Cart>  = ArrayList()
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    private fun insertProduct(p: Product, image: Int, ){
+//        val storageRef = drugStorageReference.child(p.id.toString())
+//        val bitmap:Bitmap = BitmapFactory.decodeResource(resources, image)
+//        var fos: FileOutputStream?
+//        val file2: File = view.applicationContext.filesDir
+//        val imageFile = File(file2, "test.jpg") // just let the child parameter empty
+//
+//        fos = FileOutputStream(imageFile)
+//
+//        bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos)
+//
+//        fos.close()
+//        val uri:Uri = Uri.fromFile(imageFile)
+//        storageRef.putFile(uri).addOnSuccessListener {
+//            storageRef.downloadUrl.addOnCompleteListener {
+//                    taskSnapshot ->
+//                val imageSrc:String= taskSnapshot.result.toString()
+//                p.image = imageSrc
+//                products.add(p)
+//                drugDatabaseRef.child(p.id!!).setValue(p)
+//            }
+//
+//        }
+//    }
+//
+//
+//
+//    fun initProducts(){
+//        var id:String? = drugDatabaseRef.push().key    // generateID
+//
+//
+//        id = drugDatabaseRef.push().key
+//
+////        var p: Product = Product(id,
+////            "Per tablet" ,
+////            "FLUCONAZOLE 150 MG KAPSUL",
+////            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
+////            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
+////            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
+////                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
+////                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
+////                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
+////            "Fluconazole 150 mg" ,
+////            20700.00 ,
+////            "",
+////            4.0)
+////        insertProduct(p, R.drawable.fluconazole)
+//
+////
+////        id = drugDatabaseRef.push().key
+////        var p2 = Product(
+////            id,
+////            "Per strip",
+////            "KETOCONAZOLE 200 MG 10 TABLET",
+////            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Infeksi jamur sistemik, kandidiasis mukokutan kronis yang tidak responsif terhadap nistatin & obat-obat lainnya\n",
+////            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
+////            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
+////            "Ketoconazole 200 mg",
+////            5200.00,
+////            "",
+////            5.0
+////        )
+////        insertProduct(p2, R.drawable.ketoconazole)
+////
+//        id=drugDatabaseRef.push().key
+//        var p3 = Product(
+//            id,
+//            "Per strip",
+//            "MECOBALAMIN 500 MCG 10 KAPSUL",
+//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Neuropati perifer, tinitus, vertigo, anemia megalobastik karena defisiensi vitamin B12\n",
+//            "HARUS DENGAN RESEP DOKTER. Hipersensitif komponen",
+//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
+//            "Mecobalamin 500 mg\n",
+//            8800.00f,
+//            "",
+//            4.5
+//        )
+//        insertProduct(p3, R.drawable.mecobalamin)
+//    }
+
 }

@@ -12,6 +12,12 @@
 <!--        android:iconifiedByDefault="false"-->
 <!--        />-->
 
+    <include
+        android:id="@+id/loading"
+        android:visibility="visible"
+        layout="@layout/progress_dialog"
+
+        />
 
 
 

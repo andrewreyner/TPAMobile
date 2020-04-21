@@ -1,14 +1,13 @@
 package com.tpa.HelepDoc
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -30,14 +29,18 @@ class ProductDetail : AppCompatActivity() {
     private lateinit var tvQuantity:TextView
     private lateinit var btnAdd:Button
     private lateinit var btnDelete:Button
+    private lateinit var btnAddToCart:Button
     private lateinit var storageReference:StorageReference
     private lateinit var databaseReference: DatabaseReference
     private lateinit var product: Product
+    private lateinit var plusMinLayout: LinearLayout
     private var cart:Cart? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
         initComponents()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Product"
 
         databaseReference = FirebaseDatabase.getInstance().getReference("products")
         storageReference = FirebaseStorage.getInstance().getReference("products")
@@ -46,7 +49,19 @@ class ProductDetail : AppCompatActivity() {
         getProductById(id!!)
 
     }
+    override fun onBackPressed() {
+        finish()
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     fun initCart(){
         var index:Int = -1
         for((i, cart) in carts.withIndex()){
@@ -62,7 +77,25 @@ class ProductDetail : AppCompatActivity() {
             cart = null
         }
     }
+
+    fun checkButton(){
+        if(cart == null){
+            btnAddToCart.visibility = View.VISIBLE
+            plusMinLayout.visibility = View.GONE
+        }else{
+            btnAddToCart.visibility = View.GONE
+            plusMinLayout.visibility = View.VISIBLE
+
+        }
+    }
+
     fun initButtons(){
+        btnAddToCart.setOnClickListener {
+            cart = Cart(product, 1)
+            carts.add(cart!!)
+            tvQuantity.text = cart!!.quantity.toString()
+            checkButton()
+        }
         btnAdd.setOnClickListener(View.OnClickListener {
             if(cart == null){
                 cart = Cart(product, 1)
@@ -84,8 +117,9 @@ class ProductDetail : AppCompatActivity() {
                     tvQuantity.text = cart!!.quantity.toString()
                 }
             }
-
+            checkButton()
         })
+        checkButton()
     }
 
 
@@ -134,6 +168,8 @@ class ProductDetail : AppCompatActivity() {
         btnAdd = findViewById(R.id.btn_add)
         tvQuantity = findViewById(R.id.tv_quantity)
         btnDelete = findViewById(R.id.btn_delete)
+        btnAddToCart = findViewById(R.id.btn_add_to_cart)
+        plusMinLayout = findViewById(R.id.plus_min)
     }
 
 }

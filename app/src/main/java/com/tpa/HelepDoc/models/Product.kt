@@ -1,7 +1,7 @@
 package com.tpa.HelepDoc.models
 
 class Product(id: String?, type:String,
-    name: String, indicator:String, attention: String, dosage:String, composition:String, price:Float, image:String, rate:Double){
+    name: String, indicator:String, attention: String, dosage:String, composition:String, price:Float, image:String, rate:Float){
 
     var id:String? = id
     var type:String = type
@@ -12,11 +12,10 @@ class Product(id: String?, type:String,
     var composition:String = composition
     var price:Float= price
     var image:String = image
-    var rating: Float = 0.0f
+    var rating: Float = rate
     var count_rate: Int = 0
-
     // read data from firebase must be initialize the constructor
-    constructor() : this("", "", "","", "", "" ,"" ,0.0f, "", 0.0)
+    constructor() : this("", "", "","", "", "" ,"" ,0.0f, "", 0.0f)
 
 }
 
