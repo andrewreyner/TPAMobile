@@ -1,25 +1,25 @@
 package com.tpa.HelepDoc
 
-import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
-import android.widget.Adapter
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.tpa.HelepDoc.ProductPage.Companion.carts
 import com.tpa.HelepDoc.adapters.CartAdapter
-import com.tpa.HelepDoc.models.Cart
-import com.tpa.HelepDoc.models.Product
 import com.tpa.HelepDoc.models.Transaction
+
 
 class CartActivity : AppCompatActivity() {
     private lateinit var rvCart:RecyclerView
@@ -27,23 +27,43 @@ class CartActivity : AppCompatActivity() {
     lateinit var btnCheckout:Button
     private val USERID:String = "-M43c_mp8Ur1bDV3PksP"
     private lateinit var databaseReference: DatabaseReference
-
+    private lateinit var tvMsg: TextView
     companion object{
         var totalPayment: Double = 0.0
+    }
+
+    override fun onBackPressed() {
+//        val intent:Intent = Intent(this@CartActivity, NavigatorActivity::class.java)
+//        startActivity(intent)
+        finish()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Cart"
 
         databaseReference = FirebaseDatabase.getInstance().getReference("transaction")
 
         rvCart = findViewById(R.id.rv_carts)
         cartAdapter = CartAdapter(carts,this@CartActivity)
         btnCheckout = findViewById(R.id.btn_checkout)
+        tvMsg  = findViewById(R.id.tv_msg)
         updateTotalPayment()
         rvCart.apply {
             setHasFixedSize(true)
+
             layoutManager = LinearLayoutManager(this@CartActivity)
             this.adapter = cartAdapter
         }
@@ -72,9 +92,19 @@ class CartActivity : AppCompatActivity() {
 
         })
 
+        checkButton()
 
     }
 
+    fun checkButton(){
+        if(carts.isEmpty()){
+            tvMsg.visibility = View.VISIBLE
+            btnCheckout.visibility =View.GONE
+        }else{
+            btnCheckout.visibility= View.VISIBLE
+            tvMsg.visibility = View.GONE
+        }
+    }
     fun updateTotalPayment(){
         if(!carts.isEmpty()){
             totalPayment= 0.0;

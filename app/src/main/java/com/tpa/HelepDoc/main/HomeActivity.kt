@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         val sp = getSharedPreferences("Auth", Context.MODE_PRIVATE)
-
+        
         rvDoctor = findViewById(R.id.rv_doctor_rec)
         rvProduct = findViewById(R.id.rv_product_rec)
         rvLatest = findViewById(R.id.rv_latest)
