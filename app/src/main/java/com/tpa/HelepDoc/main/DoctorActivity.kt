@@ -76,13 +76,13 @@ class DoctorActivity : AppCompatActivity() {
 
     private fun initDoctor() {
         var id:String? = doctorRef.push().key
-        doctorRef.child(id!!).setValue(Doctor(id, "Hendra Suhendra", "hendra@gmail.com", "081234567890","asdf1234", "Male", "Dentist", 150000f))
+        doctorRef.child(id!!).setValue(Doctor(id, "Hendra Suhendra", "hendra@gmail.com", "081234567890","asdf1234", "Male", "Dentist", 150000f, ArrayList()))
         id = doctorRef.push().key
-        doctorRef.child(id!!).setValue(Doctor(id, "Siti Sutarti", "siti@gmail.com", "081234567891", "asdf1234", "Female", "General", 50000f))
+        doctorRef.child(id!!).setValue(Doctor(id, "Siti Sutarti", "siti@gmail.com", "081234567891", "asdf1234", "Female", "General", 50000f, ArrayList()))
         id = doctorRef.push().key
-        doctorRef.child(id!!).setValue(Doctor(id, "Hani Ayunda", "hani@gmail.com", "081234567892", "asdf1234", "Female", "Skin Care", 120000f))
+        doctorRef.child(id!!).setValue(Doctor(id, "Hani Ayunda", "hani@gmail.com", "081234567892", "asdf1234", "Female", "Skin Care", 120000f, ArrayList()))
         id = doctorRef.push().key
-        doctorRef.child(id!!).setValue(Doctor(id, "Malik Sumalik", "malik@gmail.com", "081234567894", "asdf1234", "Male", "General", 60000f))
+        doctorRef.child(id!!).setValue(Doctor(id, "Malik Sumalik", "malik@gmail.com", "081234567894", "asdf1234", "Male", "General", 60000f, ArrayList()))
 
     }
 }

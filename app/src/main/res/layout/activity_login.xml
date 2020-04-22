@@ -10,6 +10,11 @@
     android:layout_height="match_parent"
     tools:context=".auth.LoginActivity">
 
+    <include
+        android:id="@+id/loading"
+        android:visibility="visible"
+        layout="@layout/progress_dialog"/>
+
     <androidx.appcompat.widget.Toolbar
         android:background="@color/redTool"
         android:layout_width="match_parent"

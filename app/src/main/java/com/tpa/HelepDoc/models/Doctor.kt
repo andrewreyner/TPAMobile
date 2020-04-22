@@ -1,6 +1,9 @@
 package com.tpa.HelepDoc.models
 
-class Doctor (id: String?, fullname: String, email: String, phoneNumber: String, password: String, gender: String, specialist: String, fee: Float){
+import java.util.*
+import kotlin.collections.ArrayList
+
+class Doctor (id: String?, fullname: String, email: String, phoneNumber: String, password: String, gender: String, specialist: String, fee: Float, ratedBy: ArrayList<String>){
     var id:String? = id
     var fullname: String = fullname
     var email: String = email
@@ -12,5 +15,6 @@ class Doctor (id: String?, fullname: String, email: String, phoneNumber: String,
     var picture: String = ""
     var rating: Float = 0.0f
     var count_rate: Int = 0
-    constructor() : this("","","","", "","","",0.0f)
+    var rated_by: ArrayList<String> = ratedBy
+    constructor() : this("","","","", "","","",0.0f, ArrayList())
 }

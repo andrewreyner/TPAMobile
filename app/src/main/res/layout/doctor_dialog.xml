@@ -56,6 +56,7 @@
         android:text="Rating"/>
 
     <TextView
+        android:id="@+id/tv_text_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Give Doctor Rating!"
@@ -67,7 +68,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
-
     <Button
         style="@style/Button"
         android:id="@+id/return_from_dialog"
@@ -76,4 +76,5 @@
         android:text="Submit"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"/>
+
 </LinearLayout>

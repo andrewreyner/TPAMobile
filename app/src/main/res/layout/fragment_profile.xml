@@ -26,14 +26,13 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center">
                 <TextView
-                    android:id="@+id/logout"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:textSize="18dp"
-                    android:layout_gravity="end"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:layout_gravity="start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Logout"/>
+                    android:text="Profile"/>
             </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
@@ -73,7 +72,7 @@
                     android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fullname"/>
+                    android:text="Full Name"/>
 
                 <EditText
                     android:id="@+id/edit_fullname"

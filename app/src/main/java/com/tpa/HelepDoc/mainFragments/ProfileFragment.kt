@@ -87,10 +87,6 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        view.findViewById<TextView>(R.id.logout).setOnClickListener {
-            logout()
-        }
-
 //        change_profile_picture.setOnClickListener {
 //
 //        }
@@ -225,25 +221,6 @@ class ProfileFragment : Fragment() {
         auth.putString("phone", phoneNumber)
         auth.putString("gender", gender)
         auth.commit()
-    }
-
-    private fun logout() {
-        var sp = act.getSharedPreferences("Auth", Context.MODE_PRIVATE)
-        val auth = sp.edit()
-        auth.putString("id", "")
-        auth.putString("fullname", "")
-        auth.putString("email", "")
-        auth.putString("password", "")
-        auth.putString("phone", "")
-        auth.putString("gender", "")
-        auth.putString("dob", "")
-        auth.putFloat("balance", 0.0f)
-        auth.putString("picture", "")
-        auth.putString("comeFrom", "")
-        auth.commit()
-        var intent = Intent(activity, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
     }
 
     companion object {

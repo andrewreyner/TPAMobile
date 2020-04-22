@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +26,7 @@ import com.tpa.HelepDoc.adapters.TransactionDetailAdapter
 import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.Product
 import com.tpa.HelepDoc.models.Transaction
+import java.lang.Exception
 import java.util.*
 
 
@@ -209,11 +212,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateDoctorView() {
-        doctorAdapter = DoctorRecommendAdapter(recDoctors, this.context!!)
-        rvDoctor.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this.context!!, LinearLayoutManager.HORIZONTAL, false)
-            adapter = doctorAdapter
+        try {
+            doctorAdapter = DoctorRecommendAdapter(recDoctors, this.context!!)
+            rvDoctor.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(this.context!!, LinearLayoutManager.HORIZONTAL, false)
+                adapter = doctorAdapter
+            }
+        }
+        catch (e: Exception) {
+
         }
     }
 

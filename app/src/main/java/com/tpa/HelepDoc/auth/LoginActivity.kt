@@ -3,6 +3,7 @@ package com.tpa.HelepDoc.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -33,6 +34,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LoginActivity : AppCompatActivity() {
@@ -41,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     var userRef = FirebaseDatabase.getInstance().getReference("users")
     var doctorRef = FirebaseDatabase.getInstance().getReference("doctors")
-    var users: Vector<User> = Vector()
-    var doctors: Vector<Doctor> = Vector()
+    var users: ArrayList<User> = ArrayList()
+    var doctors: ArrayList<Doctor> = ArrayList()
     lateinit var roleRadio : RadioGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,10 +61,6 @@ class LoginActivity : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
         var sp = getSharedPreferences("Auth",
             Context.MODE_PRIVATE);
-
-        if(!sp.getString("comeFrom", "").equals("Register")) {
-            resetSP()
-        }
 
         var email = sp.getString("email", "");
         findViewById<EditText>(R.id.emailOrPhone).setText(email)
@@ -107,17 +105,6 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-//<<<<<<< HEAD
-//            for(u in users) {
-//                if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
-//                    Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
-//                    setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
-////                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
-//                    var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
-//                    finish()
-//                    startActivity(intent)
-//                    return@setOnClickListener
-//=======
             try {
                 role = findViewById<RadioButton>(findViewById<RadioGroup>(R.id.roleGroup).getCheckedRadioButtonId()).text.toString()
             }
@@ -158,6 +145,36 @@ class LoginActivity : AppCompatActivity() {
         googleSignIn.setOnClickListener {
             signInGoogle()
         }
+
+        Handler().postDelayed(Runnable {
+            if(!sp.getString("email", "").equals("")) {
+                if(sp.getString("role", "").equals("User")) {
+                    for(u in users) {
+//                    Toast.makeText(applicationContext, "Toast", Toast.LENGTH_LONG).show()
+//                    Log.v(sp.getString("email", "") + " " + u.email + " " + sp.getString("password", "") + " " + u.password, "Test")
+                        if((sp.getString("email", "").equals(u.email) || sp.getString("phone", "").equals(u.phoneNumber)) && sp.getString("password", "").equals(u.password)) {
+                            Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+                            setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture, "User")
+                            var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
+                            finish()
+                            startActivity(intent)
+                        }
+                    }
+                }
+                else if(sp.getString("role", "").equals("Doctor")) {
+                    for(d in doctors) {
+                        if((sp.getString("email", "").equals(d.email) || sp.getString("phone", "").equals(d.phoneNumber)) && sp.getString("password", "").equals(d.password)) {
+                            Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+                            setSP(d.id as String, d.fullname, d.email, d.password, d.phoneNumber, d.gender, "", 0f, "", "Doctor")
+                            var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
+                            finish()
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
+            loading.visibility = View.GONE
+        }, 2000)
 
     }
 
@@ -250,7 +267,7 @@ class LoginActivity : AppCompatActivity() {
             if(gmailRes!!.toString().equals(u.email)){
                 setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture, "User")
                 Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
-                var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+                var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
                 finish()
                 startActivity(intent)
                 return

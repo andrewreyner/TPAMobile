@@ -34,7 +34,13 @@ class DoctorRecommendAdapter(val doctors: Vector<Doctor>, val cont: Context): Re
         holder.tvDoctorFullname.setText("Fullname: " + doc.fullname)
         holder.tvDoctorSpecialist.setText("Specialist: " + doc.specialist)
         holder.tvDoctorFee.setText("Fee " + doc.fee)
-        holder.tvDoctorRating.setText("Rating: " + (doc.rating/doc.count_rate).toString() + " stars (" + doc.count_rate + ")")
+        if(doc.count_rate != 0) {
+            var rate: Float = Math.round(doc.rating/doc.count_rate * 10f) / 10f
+            holder.tvDoctorRating.setText("Rating: " + (rate).toString() + " stars (" + doc.count_rate + ")")
+        }
+        else {
+            holder.tvDoctorRating.setText("Rating: NaN")
+        }
 
 //        holder.itemView.setOnClickListener {
 //            var dialog = LayoutInflater.from(cont).inflate(R.layout.doctor_dialog, null)

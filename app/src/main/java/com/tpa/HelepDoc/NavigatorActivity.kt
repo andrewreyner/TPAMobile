@@ -34,12 +34,7 @@ class NavigatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_navigator)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-
         navView= findViewById(R.id.nav_view)
-
-
-
         val headerView= navView.getHeaderView(0)
 
 
@@ -60,7 +55,7 @@ class NavigatorActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_chat, R.id.nav_product, R.id.nav_profile, R.id.nav_transaction), drawerLayout)
+            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_chat, R.id.nav_product, R.id.nav_profile, R.id.nav_transaction, R.id.nav_doctor), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         hideNavItem(role)

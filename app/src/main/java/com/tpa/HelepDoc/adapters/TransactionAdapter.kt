@@ -31,11 +31,27 @@ class TransactionAdapter(var transactions: ArrayList<Transaction>, var cont: Con
             layoutManager = LinearLayoutManager(cont, LinearLayoutManager.HORIZONTAL, false)
             adapter = TransactionDetailAdapter(trans.carts as ArrayList<Cart>)
         }
-        holder.layout.setOnClickListener {
-            if(holder.detail_layout.visibility == View.GONE)
-                holder.detail_layout.visibility = View.VISIBLE
-            else if(holder.detail_layout.visibility == View.VISIBLE)
-                holder.detail_layout.visibility = View.GONE
+//        holder.layout.setOnClickListener {
+//            if(holder.detail_layout.visibility == View.GONE) {
+//                holder.detail_layout.visibility = View.VISIBLE
+//                holder.dropBtn.visibility = View.GONE
+//                holder.dropRevBtn.visibility = View.VISIBLE
+//            }
+//            else if(holder.detail_layout.visibility == View.VISIBLE) {
+//                holder.detail_layout.visibility = View.GONE
+//                holder.dropRevBtn.visibility = View.GONE
+//                holder.dropBtn.visibility = View.VISIBLE
+//            }
+//        }
+        holder.dropBtn.setOnClickListener {
+            holder.detail_layout.visibility = View.VISIBLE
+            holder.dropBtn.visibility = View.GONE
+            holder.dropRevBtn.visibility = View.VISIBLE
+        }
+        holder.dropRevBtn.setOnClickListener {
+            holder.detail_layout.visibility = View.GONE
+            holder.dropRevBtn.visibility = View.GONE
+            holder.dropBtn.visibility = View.VISIBLE
         }
     }
 }
