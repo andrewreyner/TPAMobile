@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 
 class NavigatorActivity : AppCompatActivity() {
 
@@ -59,14 +60,21 @@ class NavigatorActivity : AppCompatActivity() {
     }
 
 
-    private fun hideNavItem(role:String?){
+    private fun hideNavItem(role:String?) {
         val menu = navView.menu
         // HIDE HERE
-        if(role == "Doctor")
+        if (role == "Doctor"){
             menu.findItem(R.id.nav_main_chat).isVisible = false
+            menu.findItem(R.id.nav_home).isVisible= false
+            menu.findItem(R.id.nav_product).isVisible= false
+            menu.findItem(R.id.nav_profile).isVisible= false
+            menu.findItem(R.id.nav_transaction).isVisible= false
+        }
         if(role== "User")
             menu.findItem(R.id.nav_chat).isVisible=false
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
