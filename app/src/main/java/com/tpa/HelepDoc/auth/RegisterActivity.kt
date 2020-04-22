@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tpa.HelepDoc.R
+import com.tpa.HelepDoc.main.HomeActivity
 import com.tpa.HelepDoc.models.User
 import kotlinx.android.synthetic.main.activity_register.*
 import java.lang.Exception
@@ -97,10 +98,6 @@ class RegisterActivity : AppCompatActivity() {
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
 
-        googleSignIn.setOnClickListener {
-            signInGoogle()
-        }
-
         register.setOnClickListener {
             var fullname = findViewById<EditText>(R.id.fullname).text.toString()
             var email = findViewById<EditText>(R.id.email).text.toString()
@@ -114,7 +111,27 @@ class RegisterActivity : AppCompatActivity() {
                 gender = findViewById<RadioButton>(findViewById<RadioGroup>(R.id.genderGroup).getCheckedRadioButtonId()).text.toString()
             }
             catch (e : Exception){
-                Toast.makeText(applicationContext, "Please choose a gender!", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Please fill all field!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(fullname.equals("") || dob.equals("Change Date") || email.equals("") || password.equals("") || confirmpass.equals("") || phone.equals("") || gender.equals("")) {
+                Toast.makeText(applicationContext, "Please fill all field!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(!checkEmail(email)) {
+                Toast.makeText(applicationContext, "Email must Gmail or Yahoo Mail format!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(!checkPhoneNumber(phone)) {
+                Toast.makeText(this, "Phone must consist of 10 - 12 digit!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(!checkPass(password)) {
+                Toast.makeText(this, "Password must consist of 8 alphanumeric or more!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -123,11 +140,6 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
-            }
-
-            if(fullname.equals("") || dob.equals("Change Date") || email.equals("") || password.equals("") || confirmpass.equals("") || phone.equals("") || gender.equals("")) {
-                Toast.makeText(applicationContext, "Please fill all field!", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
             }
 
             if(!confirmpass.equals(password)) {
@@ -231,5 +243,35 @@ class RegisterActivity : AppCompatActivity() {
             var phone = findViewById<EditText>(R.id.phone).setText(result.user!!.phoneNumber)
             return@addOnSuccessListener
         }
+    }
+
+    private fun checkEmail(email: String): Boolean {
+        if((!email.endsWith("@gmail.com") && !email.endsWith("@yahoo.com")) || email.startsWith("@gmail.com") || email.startsWith("@yahoo.com")) {
+            return false
+        }
+        return true
+    }
+
+    private fun checkPass(pass: String): Boolean {
+        var alpha = 0
+        var num = 0
+        if(pass.length < 8) {
+            return false
+        }
+        for (x in pass) {
+            if(x.isLetter()) alpha++
+            else if(x.isDigit()) num++
+            else return false
+        }
+        if(alpha == 0 || num == 0) return false
+        return true
+    }
+
+    private fun checkPhoneNumber(phone: String): Boolean {
+        for(x in phone) {
+            if(!x.isDigit()) return false
+        }
+        if(phone.length < 10 || phone.length > 12) return false
+        return true
     }
 }

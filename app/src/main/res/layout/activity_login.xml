@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/redBack"
     android:id="@+id/login_main_layout"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,17 +11,11 @@
     tools:context=".auth.LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:background="@color/redTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         app:title="Login Page">
-        <Button
-            android:id="@+id/goback"
-            android:layout_gravity="end"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/goback"/>
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -30,29 +25,35 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content">
             <TextView
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email or Phone Number"/>
             <EditText
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/emailOrPhone"
-                android:hint="Enter your email or phone number ..."/>
+                android:hint="Email or phone number ..."/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content">
             <TextView
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Password"/>
             <EditText
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/password"
@@ -60,7 +61,38 @@
                 android:hint="Enter your password ..."/>
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/logout"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Role"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/roleGroup">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userRole"
+                    android:text="User"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/doctorRole"
+                    android:text="Doctor"/>
+            </RadioGroup>
+        </LinearLayout>
+
         <Button
+            style="@style/Button"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -80,6 +112,7 @@
                 android:text="You haven't an account?"/>
 
             <TextView
+                android:textColor="@android:color/holo_blue_light"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +121,8 @@
                 android:onClick="goToSignUp"
                 android:text="Sign up here."
                 android:focusable="true" />
+
+
         </LinearLayout>
 
         <TextView

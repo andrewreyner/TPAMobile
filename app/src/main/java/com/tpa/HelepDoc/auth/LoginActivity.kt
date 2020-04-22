@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -26,8 +24,14 @@ import com.tpa.HelepDoc.NavigatorActivity
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.main.HomeActivity
 import com.tpa.HelepDoc.main.ProfileActivity
+import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.User
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.password
+import kotlinx.android.synthetic.main.activity_register.*
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -36,11 +40,16 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     var userRef = FirebaseDatabase.getInstance().getReference("users")
+    var doctorRef = FirebaseDatabase.getInstance().getReference("doctors")
     var users: Vector<User> = Vector()
+    var doctors: Vector<Doctor> = Vector()
+    lateinit var roleRadio : RadioGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        roleRadio = findViewById<RadioGroup>(R.id.roleGroup)
 
         firebaseAuth = FirebaseAuth.getInstance()
         mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -73,24 +82,72 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        doctorRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()) {
+                    for(temp in p0.children) {
+                        val doctor = temp.getValue(Doctor::class.java)
+                        doctors.add(doctor!!)
+                    }
+                }
+            }
+        })
+
         login.setOnClickListener {
             var emailOrPhone = findViewById<EditText>(R.id.emailOrPhone).text.toString()
             var password = findViewById<EditText>(R.id.password).text.toString()
+            var role = ""
 
             if(emailOrPhone.equals("") || password.equals("")) {
                 Toast.makeText(applicationContext, "Please fill all field!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            for(u in users) {
-                if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
-                    Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
-                    setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
-//                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
-                    var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
-                    finish()
-                    startActivity(intent)
-                    return@setOnClickListener
+//<<<<<<< HEAD
+//            for(u in users) {
+//                if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
+//                    Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+//                    setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
+////                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+//                    var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
+//                    finish()
+//                    startActivity(intent)
+//                    return@setOnClickListener
+//=======
+            try {
+                role = findViewById<RadioButton>(findViewById<RadioGroup>(R.id.roleGroup).getCheckedRadioButtonId()).text.toString()
+            }
+            catch (e : Exception){
+                Toast.makeText(applicationContext, "Please fill all field!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(role.equals("User")) {
+                for(u in users) {
+                    if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
+                        Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+                        setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture, "User")
+                        var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
+                        finish()
+                        startActivity(intent)
+                        return@setOnClickListener
+                    }
+                }
+            }
+            else if(role.equals("Doctor")) {
+                for(d in doctors) {
+                    if((emailOrPhone.equals(d.email) || emailOrPhone.equals(d.phoneNumber)) && password.equals(d.password)) {
+                        Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
+                        setSP(d.id as String, d.fullname, d.email, d.password, d.phoneNumber, d.gender, "", 0f, "", "Doctor")
+                        var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
+                        finish()
+                        startActivity(intent)
+                        return@setOnClickListener
+                    }
                 }
             }
 
@@ -110,7 +167,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun setSP(id: String, fullname: String, email: String, password: String, phone: String, gender: String, dob: String, balance: Float, picture: String) {
+    private fun setSP(id: String, fullname: String, email: String, password: String, phone: String, gender: String, dob: String, balance: Float, picture: String, role: String) {
         val sp = getSharedPreferences(
             "Auth",
             Context.MODE_PRIVATE
@@ -127,6 +184,7 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("dob", dob)
         auth.putFloat("balance", balance)
         auth.putString("picture", picture)
+        auth.putString("role", role)
 
         auth.commit()
     }
@@ -148,6 +206,7 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("dob", "")
         auth.putFloat("balance", 0.0f)
         auth.putString("picture", "")
+        auth.putString("role", "")
         auth.putString("comeFrom", "")
 
         auth.commit()
@@ -189,7 +248,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkGmailAuth() {
         for(u in users) {
             if(gmailRes!!.toString().equals(u.email)){
-                setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
+                setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture, "User")
                 Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
                 var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
                 finish()
@@ -197,7 +256,6 @@ class LoginActivity : AppCompatActivity() {
                 return
             }
         }
-        Toast.makeText(applicationContext, "Account not found! Register first!", Toast.LENGTH_LONG).show()
         val sp = getSharedPreferences(
             "Auth",
             Context.MODE_PRIVATE
@@ -211,7 +269,15 @@ class LoginActivity : AppCompatActivity() {
         auth.putString("comeFrom", "LoginNoGmailAccount")
         auth.commit()
 
-        var intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+
+        var id: String? = userRef.push().key
+        val calendar  = java.util.Calendar.getInstance().time
+        val sdf = SimpleDateFormat("MM/dd/yyyy")
+        val currentDate = sdf.format(Date())
+        userRef.child(id!!).setValue(User(id, nameRes!!, "Male", currentDate.toString(), gmailRes!!, "asdf1234", ""))
+        setSP(id as String, nameRes!!, gmailRes!!, "asdf1234", "", "Male", currentDate.toString(), 0f, "", "User")
+
+        var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
         finish()
         startActivity(intent)
     }

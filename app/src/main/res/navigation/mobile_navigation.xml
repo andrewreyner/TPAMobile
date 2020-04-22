@@ -7,45 +7,24 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.tpa.HelepDoc.ui.home.HomeFragment"
+        android:name="com.tpa.HelepDoc.mainFragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
-
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
     </fragment>
+
     <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.tpa.HelepDoc.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+        android:id="@+id/nav_doctor"
+        android:label="Doctor List"
+        android:name="com.tpa.HelepDoc.mainFragments.DoctorViewFragment"
+        tools:layout="@layout/fragment_doctor_view"/>
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
-
-<!--    <fragment-->
-<!--        android:id="@+id/nav_gallery"-->
-<!--        android:name="com.tpa.HelepDoc.ui.gallery.GalleryFragment"-->
-<!--        android:label="@string/menu_gallery"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/nav_slideshow"-->
-<!--        android:name="com.tpa.HelepDoc.ui.slideshow.SlideshowFragment"-->
-<!--        android:label="@string/menu_slideshow"-->
-<!--        tools:layout="@layout/fragment_slideshow" />-->
     <fragment
         android:id="@+id/nav_main_chat"
         android:label="Main Chat"
         android:name="com.tpa.HelepDoc.mainFragments.MainChatFragment"
         tools:layout="@layout/fragment_main_chat"
         />
+
     <fragment
         android:id="@+id/nav_product"
         android:label="Store"
@@ -57,5 +36,17 @@
         android:label="Chat"
         android:name="com.tpa.HelepDoc.chatFragments.ChatFragment"
         tools:layout="@layout/fragment_chat"/>
+    <fragment
+        android:id="@+id/nav_profile"
+        android:label="Profile"
+        android:name="com.tpa.HelepDoc.mainFragments.ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/nav_transaction"
+        android:label="Transaction History"
+        android:name="com.tpa.HelepDoc.mainFragments.ViewTransactionFragment"
+        tools:layout="@layout/fragment_view_transaction"/>
+
 
 </navigation>

@@ -7,8 +7,18 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:icon="@drawable/home_icon"
+            android:title="@string/menu_home"/>
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile"
+            android:icon="@drawable/person_icon"/>
+
+        <item
+            android:id="@+id/nav_doctor"
+            android:title="Doctor List"
+            android:icon="@drawable/doctor_icon"
+            />
         <item
             android:id="@+id/nav_main_chat"
             android:title="Chat With Doctor"
@@ -16,10 +26,16 @@
             />
         <item
             android:id="@+id/nav_product"
-            android:title="Products"
+            android:title="Store"
             android:icon="@drawable/ic_shopping_basket_black_24dp"/>
+
         <item android:id="@+id/nav_chat"
             android:title="Chat"
             android:icon="@drawable/ic_chat_black_24dp"/>
+
+        <item
+            android:id="@+id/nav_transaction"
+            android:title="Transaction History"
+            android:icon="@drawable/transaction_icon"/>
     </group>
 </menu>

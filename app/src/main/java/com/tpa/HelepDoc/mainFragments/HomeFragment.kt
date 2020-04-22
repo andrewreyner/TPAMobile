@@ -1,30 +1,54 @@
-package com.tpa.HelepDoc.main
+package com.tpa.HelepDoc.mainFragments
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.adapters.DoctorRecommendAdapter
 import com.tpa.HelepDoc.adapters.ProductRecommendAdapter
 import com.tpa.HelepDoc.adapters.TransactionDetailAdapter
-import com.tpa.HelepDoc.models.Cart
 import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.Product
 import com.tpa.HelepDoc.models.Transaction
-import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
-import kotlin.Comparator
 
 
-class HomeActivity : AppCompatActivity() {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [HomeFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class HomeFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
 
     private lateinit var rvDoctor: RecyclerView
     private lateinit var rvProduct: RecyclerView
@@ -42,15 +66,24 @@ class HomeActivity : AppCompatActivity() {
     val proRef =  FirebaseDatabase.getInstance().getReference("products")
     val tranRef =  FirebaseDatabase.getInstance().getReference("transaction")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+    lateinit var act: Activity
 
-        val sp = getSharedPreferences("Auth", Context.MODE_PRIVATE)
-        
-        rvDoctor = findViewById(R.id.rv_doctor_rec)
-        rvProduct = findViewById(R.id.rv_product_rec)
-        rvLatest = findViewById(R.id.rv_latest)
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        act = activity
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val sp = act.getSharedPreferences("Auth", Context.MODE_PRIVATE)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val loading = view.findViewById<RelativeLayout>(R.id.loading)
+        loading.bringToFront()
+        rvDoctor = view.findViewById(R.id.rv_doctor_rec)
+        rvProduct = view.findViewById(R.id.rv_product_rec)
+        rvLatest = view.findViewById(R.id.rv_latest)
 
         docRef.addChildEventListener(object: ChildEventListener {
             override fun onCancelled(dataSnapShot: DatabaseError) {
@@ -132,8 +165,8 @@ class HomeActivity : AppCompatActivity() {
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
                 val tr = p0.getValue(Transaction::class.java)
                 if(sp.getString("id","").equals(tr!!.userId)) {
-                    getLatestTran()
-                    updateLatestView()
+                    getLatestTran(view)
+                    updateLatestView(view)
                 }
             }
 
@@ -141,8 +174,8 @@ class HomeActivity : AppCompatActivity() {
                 val tr = p0.getValue(Transaction::class.java)
                 if(sp.getString("id","").equals(tr!!.userId)) {
                     transactions.set(getIndex(tr), tr)
-                    getLatestTran()
-                    updateLatestView()
+                    getLatestTran(view)
+                    updateLatestView(view)
                 }
             }
 
@@ -150,8 +183,8 @@ class HomeActivity : AppCompatActivity() {
                 val tr = p0.getValue(Transaction::class.java)
                 if(sp.getString("id","").equals(tr!!.userId)) {
                     transactions.add(tr)
-                    getLatestTran()
-                    updateLatestView()
+                    getLatestTran(view)
+                    updateLatestView(view)
                 }
             }
 
@@ -159,41 +192,45 @@ class HomeActivity : AppCompatActivity() {
                 val tr = p0.getValue(Transaction::class.java)
                 if(sp.getString("id","").equals(tr!!.userId)) {
                     transactions.removeAt(getIndex(tr))
-                    getLatestTran()
-                    updateLatestView()
+                    getLatestTran(view)
+                    updateLatestView(view)
                 }
             }
         })
-        getLatestTran()
+        getLatestTran(view)
 
+        Handler().postDelayed(Runnable {
+            loading.visibility = View.GONE
+        }, 2000)
+
+        return view
     }
 
-
     private fun updateDoctorView() {
-        doctorAdapter = DoctorRecommendAdapter(recDoctors, this)
+        doctorAdapter = DoctorRecommendAdapter(recDoctors, this.context!!)
         rvDoctor.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this.context!!, LinearLayoutManager.HORIZONTAL, false)
             adapter = doctorAdapter
         }
     }
 
     private fun updateProductView() {
-        productAdapter = ProductRecommendAdapter(recProducts, this)
+        productAdapter = ProductRecommendAdapter(recProducts, this.context!!)
         rvProduct.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this.context!!, LinearLayoutManager.HORIZONTAL, false)
             adapter = productAdapter
         }
     }
 
-    private fun updateLatestView() {
-        findViewById<TextView>(R.id.tv_transaction_date).setText("Transaction Date: " + latestTran.transactionDate)
-        findViewById<TextView>(R.id.tv_grand_total).setText("Grand Total: IDR " + latestTran.userBalance)
+    private fun updateLatestView(view: View) {
+        view.findViewById<TextView>(R.id.tv_transaction_date).setText("Transaction Date: " + latestTran.transactionDate)
+        view.findViewById<TextView>(R.id.tv_grand_total).setText("Grand Total: IDR " + latestTran.userBalance)
         latestAdapter = TransactionDetailAdapter(latestTran.carts!!)
         rvLatest.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this.context!!, LinearLayoutManager.HORIZONTAL, false)
             adapter = latestAdapter
         }
     }
@@ -219,16 +256,16 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLatestTran() {
+    private fun getLatestTran(view: View) {
         if(transactions.size != 0) {
-            findViewById<TextView>(R.id.tv_latest_purchase).setText("Your Latest Transaction")
+            view.findViewById<TextView>(R.id.tv_latest_purchase).setText("Your Latest Transaction")
             Collections.sort(transactions, LatestDateComparator())
             latestTran = transactions[0]
-            findViewById<LinearLayout>(R.id.latest_layout).visibility = View.VISIBLE
+            view.findViewById<LinearLayout>(R.id.latest_layout).visibility = View.VISIBLE
         }
         else {
-            findViewById<TextView>(R.id.tv_latest_purchase).setText("No Transaction")
-            findViewById<LinearLayout>(R.id.latest_layout).visibility = View.GONE
+            view.findViewById<TextView>(R.id.tv_latest_purchase).setText("No Transaction")
+            view.findViewById<LinearLayout>(R.id.latest_layout).visibility = View.GONE
         }
     }
 
@@ -276,5 +313,25 @@ class HomeActivity : AppCompatActivity() {
             i++
         }
         return 0
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment HomeFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            HomeFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
     }
 }

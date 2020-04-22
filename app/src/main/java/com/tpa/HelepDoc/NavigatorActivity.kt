@@ -41,7 +41,7 @@ class NavigatorActivity : AppCompatActivity() {
         var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE);
         val fullname = sp.getString("fullname", "")
         val email = sp.getString("email","")
-
+        val role = sp.getString("role", "")
         tvTitle.text= fullname
         tvSubTitle.text=email
         
@@ -52,17 +52,20 @@ class NavigatorActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_product, R.id.nav_chat), drawerLayout)
+            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_chat, R.id.nav_product, R.id.nav_profile, R.id.nav_transaction), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        hideNavItem()
+        hideNavItem(role)
     }
 
 
-    private fun hideNavItem(){
+    private fun hideNavItem(role:String?){
         val menu = navView.menu
         // HIDE HERE
-//        menu.findItem(R.id.nav_product).isVisible = false
+        if(role == "Doctor")
+            menu.findItem(R.id.nav_main_chat).isVisible = false
+        if(role== "User")
+            menu.findItem(R.id.nav_chat).isVisible=false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.SettingsActivity"
-        android:theme="@style/AppTheme" />
+        <activity android:name=".main.SettingsActivity"/>
         <activity
             android:name=".NavigatorActivity"
             android:label="@string/title_activity_navigator"
@@ -24,21 +23,20 @@
         <activity android:name=".ProductDetail" />
         <activity android:name=".ProductPage" />
         <activity android:name=".MainActivity" >
+        </activity>
+        <activity android:name=".main.ViewTransactionActivity" />
+        <activity android:name=".main.ProfileActivity" />
+        <activity android:name=".main.DoctorActivity" />
+        <activity android:name=".main.HomeActivity"></activity>
+        <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.ViewTransactionActivity" />
-        <activity android:name=".main.ProfileActivity" />
-        <activity android:name=".main.DoctorActivity" />
-        <activity android:name=".main.HomeActivity"></activity>
-        <activity android:name=".auth.LoginActivity"></activity>
         <activity android:name=".auth.RegisterActivity">
-
         </activity>
-
         <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true"
@@ -48,8 +46,6 @@
             </intent-filter>
 
         </service>
-
-
         <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseMessaging"
             android:enabled="true"
             android:exported="true"
