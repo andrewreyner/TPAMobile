@@ -1,19 +1,16 @@
 package com.tpa.HelepDoc
 
-import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract
-import android.renderscript.Sampler
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +20,10 @@ import com.tpa.HelepDoc.models.Chat
 import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.Message
 import com.tpa.HelepDoc.models.User
+import com.tpa.HelepDoc.notifications.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ChatDetailActivity : AppCompatActivity() {
     private lateinit var toolBar: Toolbar
@@ -49,10 +50,22 @@ class ChatDetailActivity : AppCompatActivity() {
     private lateinit var chatDetailAdapter:ChatDetailAdapter
     private lateinit var chat:Chat
     private lateinit var messages:ArrayList<Message>
+
+
+    var apiService:APIService? = null
+    var notify:Boolean = false
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_detail)
+
+
+
+        apiService = Client.getClient("https://fcm.googleapis.com/")!!.create(APIService::class.java)
+
+
+
         CURRENTID= intent.getStringExtra("CURRENTID").toString()
         OPPONENTID = intent.getStringExtra("OPPONENTID").toString()
         initReferences()
@@ -113,6 +126,7 @@ class ChatDetailActivity : AppCompatActivity() {
 
         })
         btnSend.setOnClickListener {
+//            notify= true
             sendMessage()
         }
     }
@@ -212,6 +226,7 @@ class ChatDetailActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun sendMessage() {
+
         if(etMessage.text.trim() == "" || etMessage.text == null){
             return
         }else{
@@ -223,7 +238,70 @@ class ChatDetailActivity : AppCompatActivity() {
             etMessage.text= null
 
             messagesReference.child(id!!).setValue(message)
+
+//            userReference.addValueEventListener(object: ValueEventListener{
+//                override fun onCancelled(p0: DatabaseError) {
+//
+//                }
+//
+//                override fun onDataChange(p0: DataSnapshot) {
+//                    val user = p0.getValue(User::class.java)
+//                    if(notify){
+//                        sendNotification(OPPONENTID, user!!.fullname, text.toString())
+//                    }
+//                    notify= false
+//
+//                }
+//
+//            }
+//            )
+
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menu!!.clear()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun sendNotification(receiver:String, username:String, text:String){
+        val tokens = FirebaseDatabase.getInstance().getReference("Tokens")
+        val query  = tokens.orderByKey().equalTo(receiver)
+        query.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    val token: Token? = ds.getValue(Token::class.java)
+                    val data = Data(CURRENTID, username, text, "New Message")
+
+                    val sender = Sender(data, token!!.token!!)
+
+                    apiService!!.sendNotification(sender)!!
+                        .enqueue(object : Callback<MyResponse?> {
+                            override fun onResponse(
+                                call: Call<MyResponse?>,
+                                response: Response<MyResponse?>
+                            ) {
+                                if(response.code() == 200){
+                                    if(response.body()!!.success != 1){
+                                        Log.i("FAIL, NOTIF", "FAIL TO NOTIFY")
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(
+                                call: Call<MyResponse?>,
+                                t: Throwable
+                            ) {
+
+                            }
+                        })
+                }
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

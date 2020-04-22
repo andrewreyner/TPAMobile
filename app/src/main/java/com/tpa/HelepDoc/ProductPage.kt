@@ -35,13 +35,6 @@ class ProductPage : AppCompatActivity() {
         var carts :ArrayList<Cart>  = ArrayList()
     }
 
-//        var id:String? = drugRef.push().key    // generateID
-//        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
-//        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
-//            Toast.makeText(this@ProductPage, "heuhe", Toast.LENGTH_LONG).show()
-//        }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_page)
@@ -50,7 +43,6 @@ class ProductPage : AppCompatActivity() {
         products = ArrayList()
         PRODUCTS = ArrayList()
         // WRITE
-//        initProducts()
         // !! -> means data non null/ promise that never null
 
         // READ DATA
@@ -122,115 +114,11 @@ class ProductPage : AppCompatActivity() {
         }
     }
 
-    fun initProducts(){
-        var id:String? = drugDatabaseRef.push().key    // generateID
-        var p: Product = Product(id,
-            "Per tablet" ,
-            "FLUCONAZOLE 150 MG KAPSUL",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
-            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
-                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
-                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
-                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
-            "Fluconazole 150 mg" ,
-            20700.00f ,
-            "", 0.0f)
-        insertProduct(p, R.drawable.fluconazole)
-
-
-        id = drugDatabaseRef.push().key
-        var p2 = Product(
-            id,
-            "Per strip",
-            "KETOCONAZOLE 200 MG 10 TABLET",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Infeksi jamur sistemik, kandidiasis mukokutan kronis yang tidak responsif terhadap nistatin & obat-obat lainnya\n",
-            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
-            "Ketoconazole 200 mg",
-            5200.00f,
-            "", 0.0f
-        )
-        insertProduct(p2, R.drawable.ketoconazole)
-//        var p: Product = Product(id,
-//            "Per tablet" ,
-//            "FLUCONAZOLE 150 MG KAPSUL",
-//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Menganitis kriptokokal, Kandidiasis sistemik, kandidiasis orofaringeal, kandidiasis vagina akul atau relaps, infeksi kandida superfisial, infeksi kandida, iskemik atau infeksi kriptokokal" ,
-//            "HARUS DENGAN RESEP DOKTER. AIDS. Hamil & laktasi. Anak < 18 tahun Kategori kehamilan: C, D (pada trimester 2 dan 3)\n" ,
-//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER.\n" +
-//                    "Dewasa menginitis kriptokokal : hari ke-1 : 400 mg sebagai dosis tunggal; hari ke-2 dan seterusnya 200 - 400 mg per hari. Lama terapi : 6 - 8 minggu. \n" +
-//                    "Kandidiasis mukosal: 50 mg/hari selama 14 hari.\n" +
-//                    "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
-//            "Fluconazole 150 mg" ,
-//            20700.00 ,
-//            "",
-//            4.0)
-//        insertProduct(p, R.drawable.fluconazole)
-
-//
-//        id = drugDatabaseRef.push().key
-//        var p2 = Product(
-//            id,
-//            "Per strip",
-//            "KETOCONAZOLE 200 MG 10 TABLET",
-//            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Infeksi jamur sistemik, kandidiasis mukokutan kronis yang tidak responsif terhadap nistatin & obat-obat lainnya\n",
-//            "HARUS DENGAN RESEP DOKTER. Wanita hamil dan menyusui. Penderita dengan gangguan fungsi hati dan Insufisiensi adrenal. Kategori Kehamilan: C",
-//            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
-//            "Ketoconazole 200 mg",
-//            5200.00,
-//            "",
-//            5.0
-//        )
-//        insertProduct(p2, R.drawable.ketoconazole)
-//
-        id=drugDatabaseRef.push().key
-        var p3 = Product(
-            id,
-            "Per strip",
-            "MECOBALAMIN 500 MCG 10 KAPSUL",
-            "INFORMASI OBAT INI HANYA UNTUK KALANGAN MEDIS. Neuropati perifer, tinitus, vertigo, anemia megalobastik karena defisiensi vitamin B12\n",
-            "HARUS DENGAN RESEP DOKTER. Hipersensitif komponen",
-            "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
-            "Mecobalamin 500 mg\n",
-            8800.00f,
-            "", 0.0f
-        )
-        insertProduct(p3, R.drawable.mecobalamin)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
         return true
     }
 
-//    private fun updateDatas(query:String?){
-//        products.removeAll(products)
-//        drugDatabaseRef.orderByChild("name").startAt(query!!.toUpperCase())
-//            .addListenerForSingleValueEvent(
-//            object:ValueEventListener{
-//                override fun onCancelled(p0: DatabaseError) {
-//                }
-//
-//                override fun onDataChange(p0: DataSnapshot) {
-//                    for(p in p0.children){
-//                        // MAKE SURE THE DRUG Constructor is Initialize -> check on the models
-//                        val product = p.getValue(Product::class.java)
-//                        products.add(product!!)
-//                    }
-//                    productAdapter.notifyDataSetChanged()
-////                    productAdapter = ProductAdapter(products,this@ProductPage)
-////                    rvProduct.apply {
-////                        setHasFixedSize(true)
-////                        layoutManager = GridLayoutManager(this@ProductPage, 2)
-////                        adapter = productAdapter
-////                    }
-//
-//                }
-//
-//            }
-//
-//        )
-//    }
     fun updateDatas(query:String?){
         products.removeAll(products)
         if(query == null){

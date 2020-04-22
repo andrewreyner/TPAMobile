@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".chatFragments.ChatFragment">
+    <include
+        android:id="@+id/loading"
+        android:visibility="visible"
+        layout="@layout/progress_dialog"
 
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chats"
         android:layout_width="match_parent"

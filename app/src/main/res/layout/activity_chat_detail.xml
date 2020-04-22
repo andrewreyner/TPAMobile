@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
 
             android:layout_above="@id/layout_send_text"
-            android:background="#8aa2e6"
+            android:background="#d4ddff"
             />
 
     <RelativeLayout

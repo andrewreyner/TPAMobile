@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:padding="5dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_image"
@@ -56,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="[Message here]"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="14sp"
                 />

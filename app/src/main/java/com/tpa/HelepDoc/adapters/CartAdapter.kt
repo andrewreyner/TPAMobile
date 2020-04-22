@@ -1,6 +1,7 @@
 package com.tpa.HelepDoc.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class CartAdapter (val carts:ArrayList<Cart>,var cartPage: CartActivity): Recycl
     }
 
 
+
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         var cart:Cart = carts[position]
         holder.bindItem(cart)
@@ -35,18 +37,25 @@ class CartAdapter (val carts:ArrayList<Cart>,var cartPage: CartActivity): Recycl
             cart!!.quantity += 1
             holder.tvQuantity.text = cart!!.quantity.toString()
             cartPage.updateTotalPayment()
+            cartPage.checkButton()
         })
         holder.btnDelete.setOnClickListener(View.OnClickListener {
-            if(cart!!.quantity == 1){
+            if(cart!!.quantity <= 1){
                 carts.remove(cart!!)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, carts.size)
+//                notifyItemRemoved(position)
+//                Log.i("hehe", carts.size.toString())
+
+//                notifyDataSetChanged()
                 cartPage.updateTotalPayment()
             }else{
                 cart!!.quantity--
                 holder.tvQuantity.text = cart!!.quantity.toString()
+
                 cartPage.updateTotalPayment()
             }
+//            notifyItemRangeRemoved(position,carts.size)
+            notifyDataSetChanged()
+            cartPage.checkButton()
         })
     }
 }

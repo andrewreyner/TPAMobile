@@ -1,19 +1,18 @@
 package com.tpa.HelepDoc.chatFragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import com.tpa.HelepDoc.R
-import com.tpa.HelepDoc.adapters.ChatAdapter
 import com.tpa.HelepDoc.adapters.LatestChatAdapter
 import com.tpa.HelepDoc.models.Chat
 import com.tpa.HelepDoc.models.Message
-import kotlin.math.log
-import kotlin.reflect.typeOf
+import com.tpa.HelepDoc.notifications.Token
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,15 +74,12 @@ class ChatFragment : Fragment() {
                         chat.doctorId = c.child("doctorId").value.toString()
                         chat.userId = c.child("userId").value.toString()
 
-
                         val messagesSS: DataSnapshot = c.child("messages")
-
-                        for(m in messagesSS.children){
-                            val message: Message =  m.getValue(Message::class.java)!!
-                            chat.messages!!.add(message)
-                        }
-
-                        chats.add(chat)
+                            for(m in messagesSS.children){
+                                val message: Message =  m.getValue(Message::class.java)!!
+                                chat.messages!!.add(message)
+                            }
+                            chats.add(chat)
                     }
                 }
                 latestChatAdapter = LatestChatAdapter(chats,CURRENTID, view.context)
@@ -91,15 +87,26 @@ class ChatFragment : Fragment() {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(view.context)
                     adapter  =latestChatAdapter
+
+                    view.findViewById<RelativeLayout>(R.id.loading).visibility = View.GONE
+
                 }
 
 
             }
 
         })
+
+        updateToken(FirebaseInstanceId.getInstance().getToken())
+
         return view
     }
 
+    private fun updateToken(token:String?){
+        val dbReference: DatabaseReference= FirebaseDatabase.getInstance().getReference("tokens")
+        val token1 = Token(token)
+        dbReference.child(CURRENTID).setValue(token1)
+    }
 
     companion object {
         /**

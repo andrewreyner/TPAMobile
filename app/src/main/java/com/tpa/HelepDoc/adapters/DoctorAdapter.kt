@@ -13,6 +13,8 @@ import com.tpa.HelepDoc.adapters.viewHolders.DoctorViewHolder
 import com.tpa.HelepDoc.models.Doctor
 import kotlinx.android.synthetic.main.activity_register.view.*
 import kotlinx.android.synthetic.main.doctor_dialog.view.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 
@@ -51,7 +53,8 @@ class DoctorAdapter(val doctors: Vector<Doctor>, val cont: Context): RecyclerVie
             dialog.doctor_fee.text = "Fee: IDR " + doctor.fee
             dialog.doctor_email.text = "Email: " + doctor.email
             dialog.doctor_phoneNumber.text = "Phone Number: " + doctor.phoneNumber
-            dialog.doctor_rating.text = "Rating: " + (doctor.rating/doctor.count_rate).toString() + " stars (" + doctor.count_rate + " review(s))"
+            var rate = Math.round(doctor.rating/doctor.count_rate * 10) / 10
+            dialog.doctor_rating.text = "Rating: " + (rate).toString() + " stars (" + doctor.count_rate + " review(s))"
             dialog.return_from_dialog.setOnClickListener {
                 alert.dismiss()
                 if(dialog.doctor_star.rating != 0f) {

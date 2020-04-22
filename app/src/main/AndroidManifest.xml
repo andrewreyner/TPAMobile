@@ -23,7 +23,6 @@
         <activity android:name=".ProductDetail" />
         <activity android:name=".ProductPage" />
         <activity android:name=".MainActivity" >
-
         </activity>
         <activity android:name=".main.ViewTransactionActivity" />
         <activity android:name=".main.ProfileActivity" />
@@ -37,8 +36,29 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegisterActivity">
-
         </activity>
+        <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_EVENT"/>
+            </intent-filter>
+
+        </service>
+        <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGE_EVENT"/>
+            </intent-filter>
+
+        </service>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

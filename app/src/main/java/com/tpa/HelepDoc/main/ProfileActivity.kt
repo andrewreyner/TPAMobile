@@ -4,10 +4,8 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.DatePicker
@@ -22,7 +20,6 @@ import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.auth.LoginActivity
 import com.tpa.HelepDoc.models.User
 import kotlinx.android.synthetic.main.activity_profile.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.change_pass_dialog.view.*
 import kotlinx.android.synthetic.main.yes_or_no.view.*
 import java.text.SimpleDateFormat
@@ -60,6 +57,10 @@ class ProfileActivity : AppCompatActivity() {
 
         goback.setOnClickListener {
             goToHome()
+        }
+
+        logout.setOnClickListener {
+            logout()
         }
 
         change_profile_picture.setOnClickListener {
@@ -150,6 +151,7 @@ class ProfileActivity : AppCompatActivity() {
                     userRef.child(sp.getString("id", "") as String).child("password").setValue(newPass)
                     val auth = sp.edit()
                     auth.putString("password", newPass)
+                    auth.commit()
                     Toast.makeText(applicationContext, "Password successfully updated!", Toast.LENGTH_LONG).show()
                 }
                 alert.dismiss()
@@ -199,6 +201,26 @@ class ProfileActivity : AppCompatActivity() {
         auth.putString("email", email)
         auth.putString("phone", phoneNumber)
         auth.putString("gender", gender)
+        auth.commit()
+    }
+
+    private fun logout() {
+        var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE)
+        val auth = sp.edit()
+        auth.putString("id", "")
+        auth.putString("fullname", "")
+        auth.putString("email", "")
+        auth.putString("password", "")
+        auth.putString("phone", "")
+        auth.putString("gender", "")
+        auth.putString("dob", "")
+        auth.putFloat("balance", 0.0f)
+        auth.putString("picture", "")
+        auth.putString("comeFrom", "")
+        auth.commit()
+        var intent = Intent(this@ProfileActivity, LoginActivity::class.java)
+        finish()
+        startActivity(intent)
     }
 
     private fun goToHome() {
