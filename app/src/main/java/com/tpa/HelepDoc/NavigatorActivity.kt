@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.tpa.HelepDoc.chatFragments.ChatFragment
 
 class NavigatorActivity : AppCompatActivity() {
 
@@ -65,10 +66,11 @@ class NavigatorActivity : AppCompatActivity() {
         // HIDE HERE
         if (role == "Doctor"){
             menu.findItem(R.id.nav_main_chat).isVisible = false
-            menu.findItem(R.id.nav_home).isVisible= false
+//            menu.findItem(R.id.nav_home).isVisible= false
             menu.findItem(R.id.nav_product).isVisible= false
-            menu.findItem(R.id.nav_profile).isVisible= false
+//            menu.findItem(R.id.nav_profile).isVisible= false
             menu.findItem(R.id.nav_transaction).isVisible= false
+            menu.findItem(R.id.nav_doctor).isVisible = false
         }
         if(role== "User")
             menu.findItem(R.id.nav_chat).isVisible=false
