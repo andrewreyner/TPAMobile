@@ -1,4 +1,4 @@
-package notifications
+package com.tpa.HelepDoc.notifications
 
 import android.app.NotificationManager
 import android.app.PendingIntent

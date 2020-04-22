@@ -1,4 +1,4 @@
-package notifications
+package com.tpa.HelepDoc.notifications
 
 class Data(user:String, body:String,  title: String,  sented:String){
     var user:String = user

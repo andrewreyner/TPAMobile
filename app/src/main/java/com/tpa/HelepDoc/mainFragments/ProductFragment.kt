@@ -1,27 +1,16 @@
-package mainFragments
+package com.tpa.HelepDoc.mainFragments
 
-import android.app.ActionBar
-import android.app.ProgressDialog
 import android.app.SearchManager
-import android.content.Context
-import android.content.Intent
 import android.database.Cursor
 import android.database.MatrixCursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.provider.BaseColumns
-import android.util.Log
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.CursorAdapter
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,8 +25,6 @@ import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.adapters.ProductAdapter
 import com.tpa.HelepDoc.models.Cart
 import com.tpa.HelepDoc.models.Product
-import java.io.File
-import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

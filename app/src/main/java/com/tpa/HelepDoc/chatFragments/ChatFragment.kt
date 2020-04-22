@@ -1,25 +1,18 @@
 package com.tpa.HelepDoc.chatFragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.tpa.HelepDoc.R
-import com.tpa.HelepDoc.adapters.ChatAdapter
 import com.tpa.HelepDoc.adapters.LatestChatAdapter
 import com.tpa.HelepDoc.models.Chat
 import com.tpa.HelepDoc.models.Message
-import mainFragments.MainChatFragment
-import notifications.Data
-import notifications.Token
-import kotlin.math.log
-import kotlin.reflect.typeOf
+import com.tpa.HelepDoc.notifications.Token
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

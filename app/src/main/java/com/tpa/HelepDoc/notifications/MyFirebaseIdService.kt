@@ -1,4 +1,4 @@
-package notifications
+package com.tpa.HelepDoc.notifications
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

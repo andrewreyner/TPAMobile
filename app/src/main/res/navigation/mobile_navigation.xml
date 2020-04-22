@@ -43,13 +43,13 @@
     <fragment
         android:id="@+id/nav_main_chat"
         android:label="MainChat"
-        android:name="mainFragments.MainChatFragment"
+        android:name="com.tpa.HelepDoc.mainFragments.MainChatFragment"
         tools:layout="@layout/fragment_main_chat"
         />
     <fragment
         android:id="@+id/nav_product"
         android:label="product"
-        android:name="mainFragments.ProductFragment"
+        android:name="com.tpa.HelepDoc.mainFragments.ProductFragment"
         tools:layout="@layout/fragment_product" />
 
 </navigation>

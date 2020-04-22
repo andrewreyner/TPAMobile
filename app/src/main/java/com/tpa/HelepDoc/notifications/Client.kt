@@ -1,4 +1,4 @@
-package notifications
+package com.tpa.HelepDoc.notifications
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

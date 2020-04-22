@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -16,7 +15,6 @@ import com.google.firebase.database.ValueEventListener
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.adapters.DoctorAdapterF
 import com.tpa.HelepDoc.models.Doctor
-import mainFragments.MainChatFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

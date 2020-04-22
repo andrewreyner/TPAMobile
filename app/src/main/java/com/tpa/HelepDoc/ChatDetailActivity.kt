@@ -20,7 +20,7 @@ import com.tpa.HelepDoc.models.Chat
 import com.tpa.HelepDoc.models.Doctor
 import com.tpa.HelepDoc.models.Message
 import com.tpa.HelepDoc.models.User
-import notifications.*
+import com.tpa.HelepDoc.notifications.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

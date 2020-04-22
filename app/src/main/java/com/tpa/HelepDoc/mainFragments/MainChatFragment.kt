@@ -1,15 +1,12 @@
-package mainFragments
+package com.tpa.HelepDoc.mainFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.tpa.HelepDoc.MainActivity
-import com.tpa.HelepDoc.NavigatorActivity
 
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.adapters.ChatAdapter

@@ -39,7 +39,7 @@
 
         </activity>
 
-        <service android:name="notifications.MyFirebaseIdService"
+        <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true"
             >
@@ -50,7 +50,7 @@
         </service>
 
 
-        <service android:name="notifications.MyFirebaseMessaging"
+        <service android:name="com.tpa.HelepDoc.notifications.MyFirebaseMessaging"
             android:enabled="true"
             android:exported="true"
             >
