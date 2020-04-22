@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">HelepDoc</string>
-<<<<<<< HEAD
     <string-array name="theme">
         <item>Red</item>
         <item>Green</item>
@@ -11,9 +10,6 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
-=======
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigator">NavigatorActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -28,5 +24,4 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
->>>>>>> upstream/master
 </resources>

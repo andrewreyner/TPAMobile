@@ -35,10 +35,6 @@ class ProductPage : AppCompatActivity() {
         var carts :ArrayList<Cart>  = ArrayList()
     }
 
-<<<<<<< HEAD
-=======
-
-
 //        var id:String? = drugRef.push().key    // generateID
 //        products.add(Drug(id, "hueuhe", "mahal" , "murah" , "pakai saja" ,"Air putih" ,200000.0 ,""))
 //        drugRef.child(id!!).setValue(products[0]).addOnCompleteListener {
@@ -46,7 +42,6 @@ class ProductPage : AppCompatActivity() {
 //        }
 
 
->>>>>>> upstream/master
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_page)
@@ -129,7 +124,6 @@ class ProductPage : AppCompatActivity() {
 
     fun initProducts(){
         var id:String? = drugDatabaseRef.push().key    // generateID
-<<<<<<< HEAD
         var p: Product = Product(id,
             "Per tablet" ,
             "FLUCONAZOLE 150 MG KAPSUL",
@@ -141,7 +135,7 @@ class ProductPage : AppCompatActivity() {
                     "Kandidiasis vagian: 150 mg sebagai dosis tunggal oral." ,
             "Fluconazole 150 mg" ,
             20700.00f ,
-            "")
+            "", 0.0f)
         insertProduct(p, R.drawable.fluconazole)
 
 
@@ -155,10 +149,9 @@ class ProductPage : AppCompatActivity() {
             "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. Infeksi mikosis: Dewasa 1 tablet per hari selama 14 hari. Jika respon tidak ada, dapat ditingkatkan menjadi 400 mg. Kandidiasis vaginal: 2 tablet selama 5 hari.",
             "Ketoconazole 200 mg",
             5200.00f,
-            ""
+            "", 0.0f
         )
         insertProduct(p2, R.drawable.ketoconazole)
-=======
 //        var p: Product = Product(id,
 //            "Per tablet" ,
 //            "FLUCONAZOLE 150 MG KAPSUL",
@@ -173,7 +166,6 @@ class ProductPage : AppCompatActivity() {
 //            "",
 //            4.0)
 //        insertProduct(p, R.drawable.fluconazole)
->>>>>>> upstream/master
 
 //
 //        id = drugDatabaseRef.push().key
@@ -200,14 +192,8 @@ class ProductPage : AppCompatActivity() {
             "HARUS DENGAN RESEP DOKTER. Hipersensitif komponen",
             "PENGGUNAAN OBAT INI HARUS SESUAI DENGAN PETUNJUK DOKTER. 3 x sehari 1 kapsul\n",
             "Mecobalamin 500 mg\n",
-<<<<<<< HEAD
             8800.00f,
-            ""
-=======
-            8800.00,
-            "",
-            4.5
->>>>>>> upstream/master
+            "", 0.0f
         )
         insertProduct(p3, R.drawable.mecobalamin)
     }
