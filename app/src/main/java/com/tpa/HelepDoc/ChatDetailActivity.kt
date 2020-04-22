@@ -239,22 +239,24 @@ class ChatDetailActivity : AppCompatActivity() {
 
             messagesReference.child(id!!).setValue(message)
 
-//            userReference.addValueEventListener(object: ValueEventListener{
+            /*
+            * FOR NOTTF
+            * */
+//            userReference.addValueEventListener(object: ValueEventListener {
 //                override fun onCancelled(p0: DatabaseError) {
 //
 //                }
 //
 //                override fun onDataChange(p0: DataSnapshot) {
 //                    val user = p0.getValue(User::class.java)
-//                    if(notify){
+//                    if (notify) {
 //                        sendNotification(OPPONENTID, user!!.fullname, text.toString())
 //                    }
-//                    notify= false
+//                    notify = false
 //
 //                }
 //
-//            }
-//            )
+//            })
 
         }
     }
@@ -265,7 +267,7 @@ class ChatDetailActivity : AppCompatActivity() {
     }
 
     private fun sendNotification(receiver:String, username:String, text:String){
-        val tokens = FirebaseDatabase.getInstance().getReference("Tokens")
+        val tokens = FirebaseDatabase.getInstance().getReference("tokens")
         val query  = tokens.orderByKey().equalTo(receiver)
         query.addValueEventListener(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {

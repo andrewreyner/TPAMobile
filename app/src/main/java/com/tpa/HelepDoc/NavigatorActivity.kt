@@ -1,10 +1,12 @@
 package com.tpa.HelepDoc
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -21,6 +23,7 @@ class NavigatorActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var svProduct: SearchView
+    private lateinit var navView: NavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigator)
@@ -28,16 +31,38 @@ class NavigatorActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
+        navView= findViewById(R.id.nav_view)
+        val headerView= navView.getHeaderView(0)
+
+
+        val tvTitle:TextView = headerView.findViewById(R.id.nav_header_title)
+        val tvSubTitle:TextView = headerView.findViewById(R.id.nav_header_subtitle)
+
+        var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE);
+        val fullname = sp.getString("fullname", "")
+        val email = sp.getString("email","")
+
+        tvTitle.text= fullname
+        tvSubTitle.text=email
+        
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_product), drawerLayout)
+            R.id.nav_home,  R.id.nav_main_chat, R.id.nav_product, R.id.nav_chat), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        hideNavItem()
+    }
+
+
+    private fun hideNavItem(){
+        val menu = navView.menu
+        // HIDE HERE
+//        menu.findItem(R.id.nav_product).isVisible = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

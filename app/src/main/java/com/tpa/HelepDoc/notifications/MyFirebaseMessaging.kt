@@ -20,9 +20,11 @@ class MyFirebaseMessaging: FirebaseMessagingService() {
 
         val sented= p0!!.data.get("sented")
 
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE);
+        val USERID = sp.getString("id", "")
+//        val firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        if(firebaseUser !=null && sented.equals(firebaseUser.uid))
+        if(USERID !=null && sented.equals(USERID))
             sendNotification(p0)
     }
     private fun sendNotification(rm: RemoteMessage){
