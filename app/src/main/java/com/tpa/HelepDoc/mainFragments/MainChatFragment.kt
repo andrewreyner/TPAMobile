@@ -34,6 +34,7 @@ class MainChatFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     private lateinit var tabLayout: TabLayout

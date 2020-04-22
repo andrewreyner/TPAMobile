@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,6 +20,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.internal.NavigationMenuItemView
+import com.tpa.HelepDoc.auth.LoginActivity
 import com.tpa.HelepDoc.chatFragments.ChatFragment
 
 class NavigatorActivity : AppCompatActivity() {
@@ -34,6 +37,9 @@ class NavigatorActivity : AppCompatActivity() {
 
 
         navView= findViewById(R.id.nav_view)
+
+
+
         val headerView= navView.getHeaderView(0)
 
 
@@ -68,14 +74,34 @@ class NavigatorActivity : AppCompatActivity() {
             menu.findItem(R.id.nav_main_chat).isVisible = false
 //            menu.findItem(R.id.nav_home).isVisible= false
             menu.findItem(R.id.nav_product).isVisible= false
-//            menu.findItem(R.id.nav_profile).isVisible= false
+            menu.findItem(R.id.nav_profile).isVisible= false
             menu.findItem(R.id.nav_transaction).isVisible= false
             menu.findItem(R.id.nav_doctor).isVisible = false
+
+
         }
         if(role== "User")
             menu.findItem(R.id.nav_chat).isVisible=false
     }
-
+    private fun logout(): Boolean {
+        var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE)
+        val auth = sp.edit()
+        auth.putString("id", "")
+        auth.putString("fullname", "")
+        auth.putString("email", "")
+        auth.putString("password", "")
+        auth.putString("phone", "")
+        auth.putString("gender", "")
+        auth.putString("dob", "")
+        auth.putFloat("balance", 0.0f)
+        auth.putString("picture", "")
+        auth.putString("comeFrom", "")
+        auth.commit()
+        var intent = Intent(this@NavigatorActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        return false
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
