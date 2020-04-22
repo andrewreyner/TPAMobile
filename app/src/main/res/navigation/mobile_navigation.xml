@@ -48,5 +48,10 @@
         android:name="com.tpa.HelepDoc.mainFragments.ViewTransactionFragment"
         tools:layout="@layout/fragment_view_transaction"/>
 
-
+    <fragment
+        android:id="@+id/nav_logout"
+        android:label="Logout"
+        android:name="com.tpa.HelepDoc.mainFragments.LogoutFragment"
+        tools:layout="@layout/fragment_logout"
+        />
 </navigation>

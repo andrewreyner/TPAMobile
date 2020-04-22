@@ -242,6 +242,7 @@ class ProfileFragment : Fragment() {
         auth.putString("comeFrom", "")
         auth.commit()
         var intent = Intent(activity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 
