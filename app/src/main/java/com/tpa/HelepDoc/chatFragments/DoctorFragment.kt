@@ -1,5 +1,6 @@
 package com.tpa.HelepDoc.chatFragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +35,7 @@ class DoctorFragment : Fragment() {
     private var param2: String? = null
 
     // CHANGE THIS ONLY
-    private val CURRENTID:String = "-M43c_mp8Ur1bDV3PksP" // USER
+    private var CURRENTID:String? = "-M43c_mp8Ur1bDV3PksP" // USER
 
 
     // ours
@@ -65,7 +66,8 @@ class DoctorFragment : Fragment() {
     ): View? {
 
         val view: View = inflater.inflate(R.layout.fragment_doctor, container, false)
-
+        var sp = view.context.getSharedPreferences("Auth", Context.MODE_PRIVATE);
+        CURRENTID = sp.getString("id", "")
         svDoctor = view.findViewById(R.id.sv_doctors)
         rvDoctor = view.findViewById(R.id.rv_doctor)
         doctors = ArrayList()
@@ -99,7 +101,7 @@ class DoctorFragment : Fragment() {
 //                    spinnerCategory.
                     spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, categoryNames)
                     spinnerCategory.adapter = spinnerAdapter
-                    doctorAdapterF = DoctorAdapterF(doctors, categoryNames, CURRENTID, view.context)
+                    doctorAdapterF = DoctorAdapterF(doctors, categoryNames, CURRENTID!!, view.context)
 
                     rvDoctor?.apply {
                         setHasFixedSize(true)

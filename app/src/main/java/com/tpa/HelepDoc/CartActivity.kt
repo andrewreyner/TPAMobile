@@ -1,5 +1,6 @@
 package com.tpa.HelepDoc
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.icu.util.Calendar
@@ -26,7 +27,7 @@ class CartActivity : AppCompatActivity() {
     private lateinit var rvCart:RecyclerView
     private lateinit var cartAdapter:CartAdapter
     lateinit var btnCheckout:Button
-    private val USERID:String = "-M43c_mp8Ur1bDV3PksP"
+    private var USERID:String? = "-M43c_mp8Ur1bDV3PksP"
     private lateinit var databaseReference: DatabaseReference
     private lateinit var tvMsg: RelativeLayout
     companion object{
@@ -52,6 +53,11 @@ class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+        var sp = getSharedPreferences("Auth", Context.MODE_PRIVATE);
+        USERID = sp.getString("id", "")
+
+
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Cart"
 
@@ -74,7 +80,7 @@ class CartActivity : AppCompatActivity() {
             if(which == DialogInterface.BUTTON_POSITIVE){
                 val id:String? = databaseReference.push().key
                 val  calendar:Calendar = Calendar.getInstance()
-                val transaction:Transaction = Transaction(id, carts, USERID, calendar.time, totalPayment)
+                val transaction:Transaction = Transaction(id, carts, USERID!!, calendar.time, totalPayment)
                 databaseReference.child(id!!).setValue(transaction)
                 carts.removeAll(carts)
                 finish()

@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.tpa.HelepDoc.auth.LoginActivity
 
 import java.io.File
 import java.io.FileOutputStream
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        actionBar!!.setDisplayHomeAsUpEnabled(true);
 //        actionBar!!.setHomeButtonEnabled(true);
 
-        val intent = Intent(this@MainActivity, NavigatorActivity::class.java)
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }

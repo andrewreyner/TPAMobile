@@ -86,7 +86,12 @@ class LatestChatAdapter(val chats:ArrayList<Chat>, val currId:String,val context
                         })
                     }else{
                         holder.tvMessage.text = ""
-
+                        holder.itemView.setOnClickListener(View.OnClickListener {
+                            val intent = Intent(context, ChatDetailActivity::class.java)
+                            intent.putExtra("CURRENTID", currId)
+                            intent.putExtra("OPPONENTID", user.id)
+                            context.startActivity(intent)
+                        })
                     }
                 }
                 Log.i("HORE", "HORE")
@@ -121,8 +126,14 @@ class LatestChatAdapter(val chats:ArrayList<Chat>, val currId:String,val context
 
                     }else{
                         holder.tvMessage.text = ""
-
+                        holder.itemView.setOnClickListener(View.OnClickListener {
+                            val intent = Intent(context, ChatDetailActivity::class.java)
+                            intent.putExtra("CURRENTID", currId)
+                            intent.putExtra("OPPONENTID", doctor.id)
+                            context.startActivity(intent)
+                        })
                     }
+
                 }
 
                 Log.i("HORE", "HORE")

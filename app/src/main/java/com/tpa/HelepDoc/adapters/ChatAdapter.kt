@@ -8,7 +8,7 @@ import com.tpa.HelepDoc.chatFragments.ChatFragment
 import com.tpa.HelepDoc.chatFragments.DoctorFragment
 import com.tpa.HelepDoc.models.Doctor
 
-class ChatAdapter(val fragmentManager:FragmentManager, val fragmentList: ArrayList<Fragment>, val titles: ArrayList<String>): FragmentPagerAdapter(fragmentManager) {
+class ChatAdapter(val fragmentManager:FragmentManager, val fragmentList: ArrayList<Fragment>, val titles: ArrayList<String>): FragmentStatePagerAdapter(fragmentManager) {
 
 
     override fun getItem(position: Int): Fragment {

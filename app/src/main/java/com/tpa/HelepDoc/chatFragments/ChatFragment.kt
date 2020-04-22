@@ -1,6 +1,9 @@
 package com.tpa.HelepDoc.chatFragments
 
+import android.content.Context
 import android.os.Bundle
+import android.renderscript.Sampler
+import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
@@ -32,7 +35,7 @@ class ChatFragment : Fragment() {
 
 
 
-    private val CURRENTID:String = "-M43c_mp8Ur1bDV3PksP" // USER
+    private var CURRENTID:String?? = "-M43c_mp8Ur1bDV3PksP" // USER
 
     private lateinit var chatReference:DatabaseReference
 
@@ -57,6 +60,8 @@ class ChatFragment : Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_chat, container, false)
 
+        var sp = view.context.getSharedPreferences("Auth", Context.MODE_PRIVATE);
+        CURRENTID = sp.getString("id", "")
         chatReference =  FirebaseDatabase.getInstance().getReference("chats")
         rvChats = view.findViewById(R.id.rv_chats)
         chats = ArrayList()
@@ -71,18 +76,28 @@ class ChatFragment : Fragment() {
                 if(p0.exists()){
                     for(c in p0.children){
                         val chat  = Chat()
+
+
+
                         chat.doctorId = c.child("doctorId").value.toString()
                         chat.userId = c.child("userId").value.toString()
+                        Log.i("MY ID", CURRENTID)
+                        Log.i("FETCH ID", chat.userId)
+                        if(chat.userId.trim() == CURRENTID ||  chat.doctorId.trim() == CURRENTID){
+                            val messagesSS: DataSnapshot = c.child("messages")
+                            if(messagesSS.exists()){
+                                for(m in messagesSS.children){
+                                    val message: Message =  m.getValue(Message::class.java)!!
+                                    chat.messages!!.add(message)
+                                }
+                                chats.add(chat)
+                            }else{
 
-                        val messagesSS: DataSnapshot = c.child("messages")
-                            for(m in messagesSS.children){
-                                val message: Message =  m.getValue(Message::class.java)!!
-                                chat.messages!!.add(message)
                             }
-                            chats.add(chat)
+                        }
                     }
                 }
-                latestChatAdapter = LatestChatAdapter(chats,CURRENTID, view.context)
+                latestChatAdapter = LatestChatAdapter(chats,CURRENTID!!, view.context)
                 rvChats.apply {
                     setHasFixedSize(true)
                     layoutManager = LinearLayoutManager(view.context)
@@ -105,7 +120,7 @@ class ChatFragment : Fragment() {
     private fun updateToken(token:String?){
         val dbReference: DatabaseReference= FirebaseDatabase.getInstance().getReference("tokens")
         val token1 = Token(token)
-        dbReference.child(CURRENTID).setValue(token1)
+        dbReference.child(CURRENTID!!).setValue(token1)
     }
 
     companion object {

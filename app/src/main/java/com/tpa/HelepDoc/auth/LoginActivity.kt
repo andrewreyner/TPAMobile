@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.tpa.HelepDoc.NavigatorActivity
 import com.tpa.HelepDoc.R
 import com.tpa.HelepDoc.main.HomeActivity
 import com.tpa.HelepDoc.main.ProfileActivity
@@ -85,7 +86,8 @@ class LoginActivity : AppCompatActivity() {
                 if((emailOrPhone.equals(u.email) || emailOrPhone.equals(u.phoneNumber)) && password.equals(u.password)) {
                     Toast.makeText(applicationContext, "Login success!", Toast.LENGTH_LONG).show()
                     setSP(u.id as String, u.fullname, u.email, u.password, u.phoneNumber, u.gender, u.dob, u.balance, u.picture)
-                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+//                    var intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+                    var intent = Intent(this@LoginActivity, NavigatorActivity::class.java)
                     finish()
                     startActivity(intent)
                     return@setOnClickListener

@@ -1,15 +1,14 @@
 package com.tpa.HelepDoc.mainFragments
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.database.Cursor
 import android.database.MatrixCursor
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.CursorAdapter
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
@@ -67,6 +66,10 @@ class ProductFragment : Fragment() {
 
     private lateinit var loading:RelativeLayout
 
+
+    private lateinit var cursorAdapter: SimpleCursorAdapter
+
+
 //    private lateinit var progressDialog: ProgressDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,9 +105,10 @@ class ProductFragment : Fragment() {
                         products.add(product!!)
                     }
                     PRODUCTS.addAll(products)
-                    for (p in PRODUCTS) {
-                        productNames.add(p.name)
-                    }
+                    if(productNames.isEmpty())
+                        for (p in PRODUCTS) {
+                            productNames.add(p.name)
+                        }
                     productAdapter = ProductAdapter(products, view.context!!)
                     rvProduct.apply {
                         setHasFixedSize(true)
@@ -141,22 +145,43 @@ class ProductFragment : Fragment() {
 
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.product_menu,menu)
+    @SuppressLint("ResourceType")
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
         val searchItem = menu.findItem(R.id.sv_product)
         svProduct = searchItem?.actionView as SearchView
-        svProduct.queryHint = "search"
-        val tv = svProduct.findViewById<AutoCompleteTextView>(androidx.appcompat.R.id.search_src_text)
-        tv.threshold = 1
+        svProduct.queryHint = "Search product ..."
+//        val tv = svProduct.findViewById<AutoCompleteTextView>(androidx.appcompat.R.id.search_src_text)
+//        tv.threshold = 1
 
 
         val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val to = intArrayOf(R.id.item_label)
-        val cursorAdapter = SimpleCursorAdapter(context, R.layout.search_product_layout, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
-        svProduct.suggestionsAdapter =  cursorAdapter
-        val suggestions = listOf("Apple", "Blueberry", "Carrot", "Daikon")
+//        val layout:TextView = myView.findViewById(android.R.layout.simple_dropdown_item_1line)
+//        layout.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        val to = intArrayOf(android.R.id.text1)
+        cursorAdapter = SimpleCursorAdapter(context,
+            R.layout.my_search_layout,
+            null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
+
+        svProduct.suggestionsAdapter =cursorAdapter
+        svProduct.setOnSuggestionListener(object: SearchView.OnSuggestionListener{
+            override fun onSuggestionSelect(position: Int): Boolean {
+                return false
+            }
+
+            override fun onSuggestionClick(position: Int): Boolean {
+                val cursor  = svProduct.suggestionsAdapter.getItem(position)  as Cursor
+                val text = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                svProduct.setQuery(text, true)
+
+                return true
+
+            }
+
+
+        })
+
+
         svProduct.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 updateDatas(query)
@@ -166,9 +191,9 @@ class ProductFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 val cursor  = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
                 newText?.let{
-                    suggestions.forEachIndexed { index, suggestion ->
+                    productNames.forEachIndexed { index, suggestion ->
                         if (suggestion.contains(newText, true))
-                            cursor.addRow(arrayOf(index, suggestion))
+                            cursor.addRow(arrayOf(index, suggestion.toString()))
                     }
                 }
                 cursorAdapter.changeCursor(cursor)
@@ -177,22 +202,14 @@ class ProductFragment : Fragment() {
             }
 
         })
-        svProduct.setOnSuggestionListener(object: SearchView.OnSuggestionListener{
-            override fun onSuggestionSelect(position: Int): Boolean {
-                return false
-            }
-
-            override fun onSuggestionClick(position: Int): Boolean {
-                val cursor  = svProduct.suggestionsAdapter.getItem(position)  as Cursor
-                val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
-                svProduct.setQuery(selection, false)
-
-                return true
-
-            }
 
 
-        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.product_menu,menu)
+
 
         super.onCreateOptionsMenu(menu, inflater)
     }
