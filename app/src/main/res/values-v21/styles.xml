@@ -5,5 +5,10 @@
             <item name="android:statusBarColor">@android:color/transparent</item>
         </style>
 
-
+    <style name="Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">#ff1a1a</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -27,6 +27,7 @@ class ProductDetail : AppCompatActivity() {
     private lateinit var tvDosage:TextView
     private lateinit var tvComposition:TextView
     private lateinit var tvQuantity:TextView
+    private lateinit var tvProductRating: TextView
     private lateinit var btnAdd:Button
     private lateinit var btnDelete:Button
     private lateinit var btnAddToCart:Button
@@ -144,6 +145,7 @@ class ProductDetail : AppCompatActivity() {
                     tvAttention.text = product.attention
                     tvDosage.text = product.dosage
                     tvComposition.text = product.composition
+                    tvProductRating.text ="Rate :"+product.rating
                     Glide.with(this@ProductDetail).load(product.image).into(ivProductImage)
                     initCart()
                     initButtons()
@@ -170,6 +172,7 @@ class ProductDetail : AppCompatActivity() {
         btnDelete = findViewById(R.id.btn_delete)
         btnAddToCart = findViewById(R.id.btn_add_to_cart)
         plusMinLayout = findViewById(R.id.plus_min)
+        tvProductRating = findViewById(R.id.tv_product_rating)
     }
 
 }
