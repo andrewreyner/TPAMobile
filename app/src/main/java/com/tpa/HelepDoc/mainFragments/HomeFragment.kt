@@ -85,6 +85,8 @@ class HomeFragment : Fragment() {
         rvProduct = view.findViewById(R.id.rv_product_rec)
         rvLatest = view.findViewById(R.id.rv_latest)
 
+
+
         docRef.addChildEventListener(object: ChildEventListener {
             override fun onCancelled(dataSnapShot: DatabaseError) {
             }
